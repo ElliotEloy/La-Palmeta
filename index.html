@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="La Palmeta">
+<title>La Palmeta</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --verde: #1D9E75; --verde-light: #E1F5EE; --verde-dark: #085041;
+    --amber: #BA7517; --amber-light: #FAEEDA;
+    --rojo: #A32D2D; --rojo-light: #FCEBEB;
+    --bg: #f5f7f5; --card: #fff; --border: rgba(0,0,0,0.1);
+    --text: #1a1a1a; --muted: #666; --radius: 12px;
+  }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .header { background: var(--verde-dark); color: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; }
+  .header-logo { font-size: 22px; }
+  .header-titles { flex: 1; }
+  .header h1 { font-size: 18px; font-weight: 700; line-height: 1.1; }
+  .header-sub { font-size: 11px; opacity: 0.65; letter-spacing: .5px; }
+  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+  .sync-dot.ok { background: #4ade80; }
+  .sync-dot.loading { background: #facc15; animation: pulse 1s infinite; }
+  .sync-dot.error { background: #f87171; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  .search-bar { padding: 12px 16px; background: var(--verde-dark); }
+  .search-bar input { width: 100%; padding: 10px 14px; border-radius: 24px; border: none; font-size: 15px; background: rgba(255,255,255,0.15); color: #fff; outline: none; }
+  .search-bar input::placeholder { color: rgba(255,255,255,0.6); }
+
+  .tabs { display: flex; background: #fff; border-bottom: 1px solid var(--border); }
+  .tab { flex: 1; padding: 10px; text-align: center; font-size: 13px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; transition: all .2s; }
+  .tab.active { color: var(--verde); border-bottom-color: var(--verde); font-weight: 600; }
+
+  .lista { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .cliente-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+  .card-header { padding: 12px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--verde-light); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; color: var(--verde-dark); flex-shrink: 0; }
+  .card-info { flex: 1; min-width: 0; }
+  .card-nombre { font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-dir { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+  .badge { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500; }
+  .badge-hora { background: var(--verde-light); color: var(--verde-dark); }
+  .badge-deuda { background: var(--rojo-light); color: var(--rojo); }
+  .badge-tipo { background: #E6F1FB; color: #185FA5; }
+  .btn-mapa { background: var(--verde); color: #fff; border: none; border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+  .detalle { display: none; padding: 0 14px 14px; border-top: 1px solid var(--border); }
+  .detalle.open { display: block; }
+  .detalle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; margin-top: 12px; }
+  .det-item { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+  .det-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .det-val { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 2px; }
+  .det-val.rojo { color: var(--rojo); }
+  .det-val.verde { color: var(--verde); }
+  .observaciones { background: var(--amber-light); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+  .observaciones .det-label { color: var(--amber); }
+  .observaciones .det-val { font-size: 13px; font-weight: 400; color: #412402; }
+  .detalle-actions { display: flex; gap: 8px; }
+  .btn-edit { flex: 1; background: transparent; border: 1px solid var(--verde); color: var(--verde); border-radius: 20px; padding: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-nav { flex: 1; background: var(--verde); color: #fff; border: none; border-radius: 20px; padding: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-del { flex: 1; background: transparent; border: 1px solid var(--rojo); color: var(--rojo); border-radius: 20px; padding: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
+  .overlay.open { display: flex; align-items: flex-end; }
+  .modal { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-height: 90vh; overflow-y: auto; padding: 20px 16px 32px; }
+  .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .btn-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--muted); }
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: .4px; }
+  .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
+  .form-input:focus { border-color: var(--verde); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-section { font-size: 12px; font-weight: 700; color: var(--verde-dark); text-transform: uppercase; letter-spacing: .5px; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--verde-light); }
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .toggle-label { font-size: 14px; color: var(--text); }
+  .toggle { position: relative; width: 44px; height: 24px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: #ccc; border-radius: 24px; cursor: pointer; transition: .2s; }
+  .toggle-slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .2s; }
+  .toggle input:checked + .toggle-slider { background: var(--verde); }
+  .toggle input:checked + .toggle-slider:before { transform: translateX(20px); }
+  .btn-guardar { width: 100%; background: var(--verde); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+
+  .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .fab { position: fixed; bottom: 24px; right: 20px; width: 56px; height: 56px; background: var(--verde); color: #fff; border: none; border-radius: 50%; font-size: 28px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25); z-index: 150; display: flex; align-items: center; justify-content: center; }
+
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 24px; font-size: 13px; z-index: 400; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-logo">🌿</span>
+  <div class="header-titles">
+    <h1>La Palmeta</h1>
+    <div class="header-sub">Gestión de fumigaciones</div>
+  </div>
+  <div class="sync-dot loading" id="sync-dot"></div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="buscar" placeholder="Buscar cliente..." oninput="filtrar()">
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="cambiarTab('todos',this)">Todos</div>
+  <div class="tab" onclick="cambiarTab('hoy',this)">Hoy</div>
+  <div class="tab" onclick="cambiarTab('deuda',this)">Con deuda</div>
+</div>
+
+<div class="lista" id="lista">
+  <div class="empty"><div class="empty-icon">🔄</div><div>Conectando con la nube...</div></div>
+</div>
+
+<button class="fab" onclick="abrirForm()">+</button>
+<div class="toast" id="toast"></div>
+
+<!-- MODAL CLIENTE -->
+<div class="overlay" id="overlay" onclick="cerrarForm(event)">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modal-titulo">Nuevo cliente</span>
+      <button class="btn-close" onclick="cerrarFormBtn()">✕</button>
+    </div>
+
+    <div class="form-section">Datos personales</div>
+    <div class="form-group">
+      <label class="form-label">Nombre y apellido *</label>
+      <input class="form-input" id="f-nombre" type="text" placeholder="Ej: Juan García">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Dirección *</label>
+      <input class="form-input" id="f-direccion" type="text" placeholder="Ej: Av. Corrientes 1234, CABA">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input class="form-input" id="f-tel" type="tel" placeholder="11-1234-5678">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Franja horaria</label>
+        <select class="form-input" id="f-franja">
+          <option value="">Sin definir</option>
+          <option>Mañana (8-12)</option>
+          <option>Mediodía (12-15)</option>
+          <option>Tarde (15-19)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Hora en planilla</label>
+        <input class="form-input" id="f-hora" type="time">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Precio ($)</label>
+        <input class="form-input" id="f-precio" type="number" placeholder="0">
+      </div>
+    </div>
+
+    <div class="form-section">Tipo de propiedad</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tipo</label>
+        <select class="form-input" id="f-tipo" onchange="toggleDepto()">
+          <option value="Casa perímetro">Casa perímetro</option>
+          <option value="Casa jardín">Casa jardín</option>
+          <option value="Departamento">Departamento</option>
+          <option value="Local">Local</option>
+        </select>
+      </div>
+      <div class="form-group" id="grupo-depto" style="display:none">
+        <label class="form-label">Piso y letra</label>
+        <input class="form-input" id="f-depto" type="text" placeholder="Ej: 4B">
+      </div>
+    </div>
+
+    <div class="form-section">Tratamiento</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Plaga</label>
+        <select class="form-input" id="f-plaga">
+          <option>Cucarachas</option>
+          <option>Hormigas</option>
+          <option>Ratas</option>
+          <option>Abejas</option>
+          <option>Mixto</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Método</label>
+        <select class="form-input" id="f-metodo">
+          <option>Mochila eléctrica</option>
+          <option>Tacazo</option>
+          <option>Ambos</option>
+        </select>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Gel de cucaracha</span>
+      <label class="toggle"><input type="checkbox" id="f-gel-cuca"><span class="toggle-slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Gel de hormiga</span>
+      <label class="toggle"><input type="checkbox" id="f-gel-horm"><span class="toggle-slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Bajar gas</span>
+      <label class="toggle"><input type="checkbox" id="f-gas"><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="form-section">Deuda y observaciones</div>
+    <div class="toggle-row">
+      <span class="toggle-label">Debe plata</span>
+      <label class="toggle"><input type="checkbox" id="f-deuda" onchange="toggleDeuda()"><span class="toggle-slider"></span></label>
+    </div>
+    <div class="form-group" id="grupo-deuda" style="display:none">
+      <label class="form-label">Monto que debe ($)</label>
+      <input class="form-input" id="f-monto-deuda" type="number" placeholder="0">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observaciones / notas especiales</label>
+      <textarea class="form-input" id="f-obs" rows="3" placeholder="Ej: Tiene perro, dejar picadura en fondo..."></textarea>
+    </div>
+    <button class="btn-guardar" onclick="guardarCliente()">Guardar cliente</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBopAo2CTPxk7UPU_Adtty4r2W9WWtDMIA",
+  authDomain: "la-palmeta.firebaseapp.com",
+  projectId: "la-palmeta",
+  storageBucket: "la-palmeta.firebasestorage.app",
+  messagingSenderId: "286664558634",
+  appId: "1:286664558634:web:19512e859865cf901d9b53"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const colRef = collection(db, "clientes");
+
+let clientes = [];
+let editandoId = null;
+let tabActual = 'todos';
+
+const syncDot = document.getElementById('sync-dot');
+function setSyncState(s) { syncDot.className = 'sync-dot ' + s; }
+
+onSnapshot(colRef, (snap) => {
+  clientes = snap.docs.map(d => ({ ...d.data(), _id: d.id }));
+  setSyncState('ok');
+  renderizar(document.getElementById('buscar').value.toLowerCase());
+}, () => setSyncState('error'));
+
+window.filtrar = () => renderizar(document.getElementById('buscar').value.toLowerCase());
+
+window.cambiarTab = (tab, el) => {
+  tabActual = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderizar(document.getElementById('buscar').value.toLowerCase());
+};
+
+function renderizar(q = '') {
+  let lista = clientes.filter(c => c.nombre.toLowerCase().includes(q) || c.direccion.toLowerCase().includes(q));
+  if (tabActual === 'deuda') lista = lista.filter(c => c.deuda);
+  if (tabActual === 'hoy') lista = lista.sort((a,b) => (a.hora||'').localeCompare(b.hora||''));
+  const cont = document.getElementById('lista');
+  if (lista.length === 0) {
+    cont.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><div>No hay clientes todavía</div></div>`;
+    return;
+  }
+  cont.innerHTML = lista.map(c => cardHTML(c)).join('');
+}
+
+function cardHTML(c) {
+  const iniciales = c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const badgeDeuda = c.deuda ? `<span class="badge badge-deuda">Debe $${Number(c.montoDeuda).toLocaleString()}</span>` : '';
+  const badgeHora = c.hora ? `<span class="badge badge-hora">${c.hora}</span>` : '';
+  const badgeTipo = `<span class="badge badge-tipo">${c.tipo}</span>`;
+  const dirSafe = c.direccion.replace(/'/g,"\\'");
+  return `
+  <div class="cliente-card">
+    <div class="card-header" onclick="toggleDetalle('det-${c._id}')">
+      <div class="avatar">${iniciales}</div>
+      <div class="card-info">
+        <div class="card-nombre">${c.nombre}</div>
+        <div class="card-dir">${c.direccion}</div>
+        <div class="card-badges">${badgeHora}${badgeTipo}${badgeDeuda}</div>
+      </div>
+      <button class="btn-mapa" onclick="event.stopPropagation(); irGoogleMaps('${dirSafe}')">🗺 Ir</button>
+    </div>
+    <div class="detalle" id="det-${c._id}">
+      <div class="detalle-grid">
+        <div class="det-item"><div class="det-label">Plaga</div><div class="det-val">${c.plaga}</div></div>
+        <div class="det-item"><div class="det-label">Método</div><div class="det-val">${c.metodo}</div></div>
+        <div class="det-item"><div class="det-label">Gel cucaracha</div><div class="det-val ${c.gelCuca?'verde':'rojo'}">${c.gelCuca?'Sí':'No'}</div></div>
+        <div class="det-item"><div class="det-label">Gel hormiga</div><div class="det-val ${c.gelHorm?'verde':'rojo'}">${c.gelHorm?'Sí':'No'}</div></div>
+        <div class="det-item"><div class="det-label">Bajar gas</div><div class="det-val ${c.gas?'verde':'rojo'}">${c.gas?'Sí':'No'}</div></div>
+        <div class="det-item"><div class="det-label">Franja</div><div class="det-val">${c.franja||'—'}</div></div>
+        <div class="det-item"><div class="det-label">Precio</div><div class="det-val verde">$${Number(c.precio).toLocaleString()}</div></div>
+        <div class="det-item"><div class="det-label">Deuda</div><div class="det-val ${c.deuda?'rojo':'verde'}">${c.deuda?'$'+Number(c.montoDeuda).toLocaleString():'Sin deuda'}</div></div>
+        ${c.tipo==='Departamento'?`<div class="det-item"><div class="det-label">Piso/Letra</div><div class="det-val">${c.depto||'—'}</div></div>`:''}
+      </div>
+      ${c.obs?`<div class="observaciones"><div class="det-label">⚠ Observaciones</div><div class="det-val">${c.obs}</div></div>`:''}
+      <div class="detalle-actions">
+        <button class="btn-edit" onclick="editarCliente('${c._id}')">✏ Editar</button>
+        <button class="btn-nav" onclick="irGoogleMaps('${dirSafe}')">🗺 Ir</button>
+        <button class="btn-del" onclick="eliminarCliente('${c._id}','${c.nombre.replace(/'/g,"\\'")}')">🗑 Borrar</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+window.toggleDetalle = (id) => document.getElementById(id)?.classList.toggle('open');
+
+window.irGoogleMaps = (dir) => {
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`, '_blank');
+};
+
+window.abrirForm = (cliente = null) => {
+  editandoId = cliente ? cliente._id : null;
+  document.getElementById('modal-titulo').textContent = cliente ? 'Editar cliente' : 'Nuevo cliente';
+  const f = (id, val='') => { const el = document.getElementById(id); if(el) el.type==='checkbox' ? el.checked=!!val : el.value=val||''; };
+  if (cliente) {
+    f('f-nombre',cliente.nombre); f('f-direccion',cliente.direccion);
+    f('f-tel',cliente.tel); f('f-franja',cliente.franja); f('f-hora',cliente.hora);
+    f('f-precio',cliente.precio); f('f-tipo',cliente.tipo); f('f-depto',cliente.depto);
+    f('f-plaga',cliente.plaga); f('f-metodo',cliente.metodo);
+    f('f-gel-cuca',cliente.gelCuca); f('f-gel-horm',cliente.gelHorm); f('f-gas',cliente.gas);
+    f('f-deuda',cliente.deuda); f('f-monto-deuda',cliente.montoDeuda); f('f-obs',cliente.obs);
+  } else {
+    ['f-nombre','f-direccion','f-tel','f-hora','f-precio','f-depto','f-obs','f-monto-deuda'].forEach(id=>f(id,''));
+    ['f-gel-cuca','f-gel-horm','f-gas','f-deuda'].forEach(id=>f(id,false));
+    f('f-franja',''); f('f-tipo','Casa perímetro'); f('f-plaga','Cucarachas'); f('f-metodo','Mochila eléctrica');
+  }
+  window.toggleDepto(); window.toggleDeuda();
+  document.getElementById('overlay').classList.add('open');
+};
+
+window.editarCliente = (id) => { const c = clientes.find(x=>x._id===id); if(c) window.abrirForm(c); };
+
+window.eliminarCliente = async (id, nombre) => {
+  if (!confirm(`¿Eliminar a ${nombre}?`)) return;
+  setSyncState('loading');
+  await deleteDoc(doc(db,'clientes',id));
+  mostrarToast('Cliente eliminado');
+};
+
+window.cerrarForm = (e) => { if(e.target===document.getElementById('overlay')) window.cerrarFormBtn(); };
+window.cerrarFormBtn = () => document.getElementById('overlay').classList.remove('open');
+window.toggleDepto = () => {
+  document.getElementById('grupo-depto').style.display = document.getElementById('f-tipo').value==='Departamento' ? 'block' : 'none';
+};
+window.toggleDeuda = () => {
+  document.getElementById('grupo-deuda').style.display = document.getElementById('f-deuda').checked ? 'block' : 'none';
+};
+
+window.guardarCliente = async () => {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const dir = document.getElementById('f-direccion').value.trim();
+  if (!nombre || !dir) { alert('Nombre y dirección son obligatorios'); return; }
+  const datos = {
+    nombre, direccion: dir,
+    tel: document.getElementById('f-tel').value,
+    franja: document.getElementById('f-franja').value,
+    hora: document.getElementById('f-hora').value,
+    precio: parseFloat(document.getElementById('f-precio').value)||0,
+    tipo: document.getElementById('f-tipo').value,
+    depto: document.getElementById('f-depto').value,
+    plaga: document.getElementById('f-plaga').value,
+    metodo: document.getElementById('f-metodo').value,
+    gelCuca: document.getElementById('f-gel-cuca').checked,
+    gelHorm: document.getElementById('f-gel-horm').checked,
+    gas: document.getElementById('f-gas').checked,
+    deuda: document.getElementById('f-deuda').checked,
+    montoDeuda: parseFloat(document.getElementById('f-monto-deuda').value)||0,
+    obs: document.getElementById('f-obs').value,
+    updatedAt: new Date().toISOString()
+  };
+  setSyncState('loading');
+  if (editandoId) {
+    await updateDoc(doc(db,'clientes',editandoId), datos);
+    mostrarToast('Cliente actualizado ✓');
+  } else {
+    datos.createdAt = new Date().toISOString();
+    await addDoc(colRef, datos);
+    mostrarToast('Cliente guardado ✓');
+  }
+  window.cerrarFormBtn();
+};
+
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
