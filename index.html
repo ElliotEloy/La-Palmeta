@@ -34,16 +34,13 @@
   .search-bar input { width: 100%; padding: 10px 14px; border-radius: 24px; border: none; font-size: 15px; background: rgba(255,255,255,0.15); color: #fff; outline: none; }
   .search-bar input::placeholder { color: rgba(255,255,255,0.6); }
 
-  /* TABS PRINCIPALES */
   .tabs { display: flex; background: #fff; border-bottom: 1px solid var(--border); }
   .tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 12px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; transition: all .2s; }
   .tab.active { color: var(--verde); border-bottom-color: var(--verde); font-weight: 600; }
 
-  /* SCAN BAR */
-  .scan-bar { padding: 10px 16px; background: #fff; border-bottom: 1px solid var(--border); display: flex; gap: 8px; }
-  .btn-scan { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--verde-dark); color: #fff; border: none; border-radius: 10px; padding: 11px 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .scan-bar { padding: 10px 16px; background: #fff; border-bottom: 1px solid var(--border); }
+  .btn-scan { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--verde-dark); color: #fff; border: none; border-radius: 10px; padding: 11px 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
 
-  /* CARDS */
   .lista { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; padding-bottom: 90px; }
   .cliente-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
   .cliente-card.fijo { border-left: 3px solid var(--azul); }
@@ -78,13 +75,10 @@
   .btn-del { flex: 1; background: transparent; border: 1px solid var(--rojo); color: var(--rojo); border-radius: 20px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
   .btn-fijar { flex: 1; background: transparent; border: 1px solid var(--azul); color: var(--azul); border-radius: 20px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
 
-  /* HISTORIAL */
   .historial-selector { padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .historial-selector label { font-size: 13px; color: var(--muted); white-space: nowrap; }
   .historial-selector input { flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
-  .historial-selector input:focus { border-color: var(--verde); }
 
-  /* MODALES */
   .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
   .overlay.open { display: flex; align-items: flex-end; }
   .modal { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-height: 92vh; overflow-y: auto; padding: 20px 16px 32px; }
@@ -112,23 +106,21 @@
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 24px; font-size: 13px; z-index: 400; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; }
 
-  /* SCAN */
   .scan-area { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; margin-bottom: 14px; background: var(--bg); }
-  .scan-area img { max-width: 100%; border-radius: 8px; margin-top: 10px; }
+  .scan-area img { max-width: 100%; border-radius: 8px; margin-top: 10px; max-height: 220px; object-fit: contain; }
   .scan-icon { font-size: 36px; margin-bottom: 8px; }
   .scan-text { font-size: 14px; color: var(--muted); }
   .btn-procesar { width: 100%; background: var(--verde-dark); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .btn-procesar:disabled { opacity: .5; cursor: not-allowed; }
-  .preview-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .preview-list { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
   .preview-card { background: var(--verde-light); border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(29,158,117,0.2); }
   .preview-nombre { font-weight: 700; font-size: 14px; color: var(--verde-dark); }
   .preview-detalle { font-size: 12px; color: #2d6b58; margin-top: 3px; }
+  .preview-obs { font-size: 11px; color: var(--amber); margin-top: 3px; font-style: italic; }
   .btn-confirmar { width: 100%; background: var(--verde); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 14px; }
   .scanning-msg { text-align: center; padding: 20px; color: var(--verde-dark); font-weight: 600; }
-  .scanning-msg .spin { display: inline-block; animation: spin 1s linear infinite; font-size: 28px; }
+  .spin { display: inline-block; animation: spin 1s linear infinite; font-size: 28px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Franja manual */
   .franja-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 </style>
 </head>
@@ -142,11 +134,9 @@
   </div>
   <div class="sync-dot loading" id="sync-dot"></div>
 </div>
-
 <div class="search-bar">
   <input type="text" id="buscar" placeholder="Buscar cliente..." oninput="filtrar()">
 </div>
-
 <div class="tabs">
   <div class="tab active" onclick="cambiarTab('hoy',this)">Hoy</div>
   <div class="tab" onclick="cambiarTab('contactos',this)">Contactos</div>
@@ -159,7 +149,6 @@
     <button class="btn-scan" onclick="abrirScan()">📷 Escanear planilla del día</button>
   </div>
 </div>
-
 <div id="historial-bar" style="display:none">
   <div class="historial-selector">
     <label>📅 Ver día:</label>
@@ -170,7 +159,6 @@
 <div class="lista" id="lista">
   <div class="empty"><div class="empty-icon">🔄</div><div>Conectando con la nube...</div></div>
 </div>
-
 <button class="fab" onclick="abrirForm()">+</button>
 <div class="toast" id="toast"></div>
 <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="onImageSelected(event)">
@@ -201,7 +189,6 @@
       <span id="modal-titulo">Nuevo cliente</span>
       <button class="btn-close" onclick="cerrarFormBtn()">✕</button>
     </div>
-
     <div class="form-section">Datos personales</div>
     <div class="form-group">
       <label class="form-label">Nombre y apellido *</label>
@@ -226,13 +213,12 @@
       <input class="form-input" id="f-hora" type="time">
     </div>
     <div class="form-group">
-      <label class="form-label">Franja horaria (de / hasta)</label>
+      <label class="form-label">Franja horaria (desde / hasta)</label>
       <div class="franja-row">
         <input class="form-input" id="f-franja-desde" type="time" placeholder="Desde">
         <input class="form-input" id="f-franja-hasta" type="time" placeholder="Hasta">
       </div>
     </div>
-
     <div class="form-section">Tipo de propiedad</div>
     <div class="form-row">
       <div class="form-group">
@@ -249,7 +235,6 @@
         <input class="form-input" id="f-depto" type="text" placeholder="Ej: 4B">
       </div>
     </div>
-
     <div class="form-section">Tratamiento</div>
     <div class="form-row">
       <div class="form-group">
@@ -259,6 +244,7 @@
           <option>Hormigas</option>
           <option>Ratas</option>
           <option>Abejas</option>
+          <option>Polillas</option>
           <option>Mixto</option>
           <option>Otro</option>
         </select>
@@ -284,7 +270,6 @@
       <span class="toggle-label">Bajar gas</span>
       <label class="toggle"><input type="checkbox" id="f-gas"><span class="toggle-slider"></span></label>
     </div>
-
     <div class="form-section">Deuda y observaciones</div>
     <div class="toggle-row">
       <span class="toggle-label">Debe plata</span>
@@ -298,20 +283,18 @@
       <label class="form-label">Observaciones</label>
       <textarea class="form-input" id="f-obs" rows="3" placeholder="Ej: Tiene perro, dejar picadura en fondo..."></textarea>
     </div>
-
     <div class="form-section">Tipo de registro</div>
     <div class="toggle-row">
       <span class="toggle-label">📌 Guardar como contacto fijo</span>
       <label class="toggle"><input type="checkbox" id="f-fijo"><span class="toggle-slider"></span></label>
     </div>
-
     <button class="btn-guardar" onclick="guardarCliente()">Guardar</button>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBopAo2CTPxk7UPU_Adtty4r2W9WWtDMIA",
@@ -324,165 +307,118 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const colClientes = collection(db, "clientes");       // clientes del día
-const colContactos = collection(db, "contactos");     // contactos fijos permanentes
-const colHistorial = collection(db, "historial");     // días archivados
+const colClientes  = collection(db, "clientes");
+const colContactos = collection(db, "contactos");
+const colHistorial = collection(db, "historial");
 
-let clientesHoy = [];
-let contactosFijos = [];
-let tabActual = 'hoy';
-let editandoId = null;
-let editandoCol = 'clientes';
-let imagenBase64 = null;
-let clientesEscaneados = [];
+let clientesHoy = [], contactosFijos = [];
+let tabActual = 'hoy', editandoId = null, editandoCol = 'clientes';
+let imagenBase64 = null, clientesEscaneados = [];
 
 const syncDot = document.getElementById('sync-dot');
-function setSyncState(s) { syncDot.className = 'sync-dot ' + s; }
+const setSyncState = s => syncDot.className = 'sync-dot ' + s;
 
-// Fecha de hoy
-function hoyStr() {
-  const d = new Date();
-  return d.toISOString().split('T')[0];
-}
-function formatFecha(str) {
-  const [y,m,d] = str.split('-');
-  return `${d}/${m}/${y}`;
-}
+function hoyStr() { return new Date().toISOString().split('T')[0]; }
+function formatFecha(s) { const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
 document.getElementById('header-fecha').textContent = formatFecha(hoyStr());
 
-// Listeners en tiempo real
 onSnapshot(colClientes, snap => {
-  clientesHoy = snap.docs.map(d => ({ ...d.data(), _id: d.id, _col: 'clientes' }));
+  clientesHoy = snap.docs.map(d => ({...d.data(), _id:d.id, _col:'clientes'}));
   setSyncState('ok');
-  if (tabActual === 'hoy' || tabActual === 'deuda') renderizar();
+  if (['hoy','deuda'].includes(tabActual)) renderizar();
 }, () => setSyncState('error'));
 
 onSnapshot(colContactos, snap => {
-  contactosFijos = snap.docs.map(d => ({ ...d.data(), _id: d.id, _col: 'contactos', fijo: true }));
+  contactosFijos = snap.docs.map(d => ({...d.data(), _id:d.id, _col:'contactos', fijo:true}));
   setSyncState('ok');
-  if (tabActual === 'contactos') renderizar();
+  if (tabActual==='contactos') renderizar();
 }, () => setSyncState('error'));
 
-// Archivado automático a las 23:59
+// Archivado automático
 async function chequearArchivado() {
-  const ultimoArchivado = localStorage.getItem('palmeta_ultimo_archivado');
+  const ultimo = localStorage.getItem('palmeta_archivado');
   const hoy = hoyStr();
-  if (ultimoArchivado === hoy) return;
-
-  const ahora = new Date();
-  // Si pasó la medianoche y hay clientes sin archivar del día anterior
-  if (clientesHoy.length > 0) {
-    const fechaAyer = new Date(ahora);
-    fechaAyer.setDate(fechaAyer.getDate() - 1);
-    const ayerStr = fechaAyer.toISOString().split('T')[0];
-
-    // Verificar si hay clientes de ayer
-    const clientesDeAyer = clientesHoy.filter(c => {
-      if (!c.fechaDia) return true; // compatibilidad hacia atrás
-      return c.fechaDia !== hoy;
-    });
-
-    if (clientesDeAyer.length > 0) {
-      await archivarDia(ayerStr, clientesDeAyer);
-    }
-  }
-  localStorage.setItem('palmeta_ultimo_archivado', hoy);
+  if (ultimo === hoy || !clientesHoy.length) return;
+  const ayer = new Date(); ayer.setDate(ayer.getDate()-1);
+  const ayerStr = ayer.toISOString().split('T')[0];
+  const viejos = clientesHoy.filter(c => c.fechaDia && c.fechaDia !== hoy);
+  if (viejos.length) { await archivarDia(ayerStr, viejos); }
+  localStorage.setItem('palmeta_archivado', hoy);
 }
-
 async function archivarDia(fecha, lista) {
   setSyncState('loading');
   const batch = writeBatch(db);
-  // Guardar en historial
-  const refHist = doc(colHistorial, fecha);
-  batch.set(refHist, {
-    fecha,
-    clientes: lista.map(c => {
-      const { _id, _col, ...rest } = c;
-      return rest;
-    }),
-    archivedAt: new Date().toISOString()
+  batch.set(doc(colHistorial, fecha), {
+    fecha, archivedAt: new Date().toISOString(),
+    clientes: lista.map(({_id,_col,...r})=>r)
   });
-  // Borrar de clientes del día
-  lista.forEach(c => {
-    batch.delete(doc(db, 'clientes', c._id));
-  });
+  lista.forEach(c => batch.delete(doc(db,'clientes',c._id)));
   await batch.commit();
   mostrarToast(`📦 Día ${formatFecha(fecha)} archivado`);
 }
-
-// Marcar cada cliente con la fecha del día al guardarlo
-function fechaHoy() { return hoyStr(); }
+function programarArchivado() {
+  const ahora = new Date();
+  const t2359 = new Date(ahora); t2359.setHours(23,59,0,0);
+  if (ahora >= t2359) t2359.setDate(t2359.getDate()+1);
+  setTimeout(async () => { await archivarDia(hoyStr(), clientesHoy); programarArchivado(); }, t2359-ahora);
+}
+setTimeout(chequearArchivado, 3000);
+programarArchivado();
 
 window.filtrar = () => renderizar(document.getElementById('buscar').value.toLowerCase());
-
 window.cambiarTab = (tab, el) => {
   tabActual = tab;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('scan-bar-wrapper').style.display = (tab === 'hoy') ? 'block' : 'none';
-  document.getElementById('historial-bar').style.display = (tab === 'historial') ? 'block' : 'none';
-  if (tab === 'historial') {
-    document.getElementById('hist-fecha').value = hoyStr();
-    cargarHistorial();
-  } else {
-    renderizar();
-  }
+  document.getElementById('scan-bar-wrapper').style.display = tab==='hoy'?'block':'none';
+  document.getElementById('historial-bar').style.display = tab==='historial'?'block':'none';
+  if (tab==='historial') { document.getElementById('hist-fecha').value=hoyStr(); cargarHistorial(); }
+  else renderizar();
 };
-
-function renderizar(q = '') {
-  q = q || document.getElementById('buscar').value.toLowerCase();
-  let lista = [];
-
-  if (tabActual === 'hoy') {
-    lista = clientesHoy.filter(c => !c.fijo);
-    lista.sort((a,b) => (a.hora||'').localeCompare(b.hora||''));
-  } else if (tabActual === 'contactos') {
-    lista = contactosFijos;
-  } else if (tabActual === 'deuda') {
-    lista = [...clientesHoy, ...contactosFijos].filter(c => c.deuda);
-  }
-
-  if (q) lista = lista.filter(c => c.nombre.toLowerCase().includes(q) || (c.direccion||'').toLowerCase().includes(q));
-
-  const cont = document.getElementById('lista');
-  if (lista.length === 0) {
-    const msgs = {
-      hoy: ['📋','No hay clientes cargados para hoy'],
-      contactos: ['👥','No hay contactos fijos guardados'],
-      deuda: ['✅','Sin deudas registradas'],
-    };
-    const [ico, txt] = msgs[tabActual] || ['🔍','Sin resultados'];
-    cont.innerHTML = `<div class="empty"><div class="empty-icon">${ico}</div><div>${txt}</div></div>`;
-    return;
-  }
-  cont.innerHTML = lista.map(c => cardHTML(c)).join('');
-}
 
 function franjaLabel(c) {
   if (c.franjaDesde && c.franjaHasta) return `${c.franjaDesde} - ${c.franjaHasta}`;
-  if (c.franja) return c.franja;
-  return '—';
+  return c.franja || '—';
+}
+
+function renderizar(q='') {
+  q = q || document.getElementById('buscar').value.toLowerCase();
+  let lista = [];
+  if (tabActual==='hoy') { lista=[...clientesHoy].sort((a,b)=>(a.hora||'').localeCompare(b.hora||'')); }
+  else if (tabActual==='contactos') { lista=contactosFijos; }
+  else if (tabActual==='deuda') { lista=[...clientesHoy,...contactosFijos].filter(c=>c.deuda); }
+  if (q) lista=lista.filter(c=>c.nombre.toLowerCase().includes(q)||(c.direccion||'').toLowerCase().includes(q));
+  const cont = document.getElementById('lista');
+  if (!lista.length) {
+    const m={hoy:['📋','No hay clientes para hoy'],contactos:['👥','Sin contactos fijos'],deuda:['✅','Sin deudas']};
+    const [i,t]=m[tabActual]||['🔍','Sin resultados'];
+    cont.innerHTML=`<div class="empty"><div class="empty-icon">${i}</div><div>${t}</div></div>`;
+    return;
+  }
+  cont.innerHTML = lista.map(c=>cardHTML(c)).join('');
 }
 
 function cardHTML(c) {
-  const iniciales = c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  const esFijo = c.fijo || c._col === 'contactos';
-  const badgeDeuda = c.deuda ? `<span class="badge badge-deuda">Debe $${Number(c.montoDeuda||0).toLocaleString()}</span>` : '';
-  const badgeHora = c.hora ? `<span class="badge badge-hora">${c.hora}</span>` : '';
-  const badgeTipo = c.tipo ? `<span class="badge badge-tipo">${c.tipo}</span>` : '';
-  const badgeFijo = esFijo ? `<span class="badge badge-fijo">📌 Fijo</span>` : '';
-  const dirSafe = (c.direccion||'').replace(/'/g,"\\'");
-  const coleccion = c._col || 'clientes';
+  const ini = c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const esFijo = c.fijo||c._col==='contactos';
+  const col = c._col||'clientes';
+  const dirS = (c.direccion||'').replace(/'/g,"\\'");
+  const nomS = c.nombre.replace(/'/g,"\\'");
   return `
   <div class="cliente-card${esFijo?' fijo':''}">
     <div class="card-header" onclick="toggleDetalle('det-${c._id}')">
-      <div class="avatar${esFijo?' fijo':''}">${iniciales}</div>
+      <div class="avatar${esFijo?' fijo':''}">${ini}</div>
       <div class="card-info">
         <div class="card-nombre">${c.nombre}</div>
-        <div class="card-dir">${c.direccion||''}</div>
-        <div class="card-badges">${badgeHora}${badgeTipo}${badgeFijo}${badgeDeuda}</div>
+        <div class="card-dir">${c.direccion||''}${c.localidad?', '+c.localidad:''}</div>
+        <div class="card-badges">
+          ${c.hora?`<span class="badge badge-hora">${c.hora}</span>`:''}
+          ${c.tipo?`<span class="badge badge-tipo">${c.tipo}</span>`:''}
+          ${esFijo?`<span class="badge badge-fijo">📌 Fijo</span>`:''}
+          ${c.deuda?`<span class="badge badge-deuda">Debe $${Number(c.montoDeuda||0).toLocaleString()}</span>`:''}
+        </div>
       </div>
-      <button class="btn-mapa" onclick="event.stopPropagation(); irGoogleMaps('${dirSafe}')">🗺 Ir</button>
+      <button class="btn-mapa" onclick="event.stopPropagation();irMaps('${dirS}${c.localidad?', '+c.localidad:''}')">🗺 Ir</button>
     </div>
     <div class="detalle" id="det-${c._id}">
       <div class="detalle-grid">
@@ -495,67 +431,61 @@ function cardHTML(c) {
         <div class="det-item"><div class="det-label">Precio</div><div class="det-val verde">$${Number(c.precio||0).toLocaleString()}</div></div>
         <div class="det-item"><div class="det-label">Deuda</div><div class="det-val ${c.deuda?'rojo':'verde'}">${c.deuda?'$'+Number(c.montoDeuda||0).toLocaleString():'Sin deuda'}</div></div>
         ${c.tipo==='Departamento'?`<div class="det-item"><div class="det-label">Piso/Letra</div><div class="det-val">${c.depto||'—'}</div></div>`:''}
+        ${c.tel?`<div class="det-item"><div class="det-label">Teléfono</div><div class="det-val">${c.tel}</div></div>`:''}
       </div>
       ${c.obs?`<div class="observaciones"><div class="det-label">⚠ Observaciones</div><div class="det-val">${c.obs}</div></div>`:''}
       <div class="detalle-actions">
-        <button class="btn-edit" onclick="editarCliente('${c._id}','${coleccion}')">✏ Editar</button>
-        <button class="btn-nav" onclick="irGoogleMaps('${dirSafe}')">🗺 Ir</button>
-        ${!esFijo ? `<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>` : ''}
-        <button class="btn-del" onclick="eliminarCliente('${c._id}','${coleccion}','${c.nombre.replace(/'/g,"\\'")}')">🗑</button>
+        <button class="btn-edit" onclick="editarCliente('${c._id}','${col}')">✏ Editar</button>
+        <button class="btn-nav" onclick="irMaps('${dirS}${c.localidad?', '+c.localidad:''}')">🗺 Ir</button>
+        ${!esFijo?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
+        <button class="btn-del" onclick="eliminarCliente('${c._id}','${col}','${nomS}')">🗑</button>
       </div>
     </div>
   </div>`;
 }
 
-window.toggleDetalle = (id) => document.getElementById(id)?.classList.toggle('open');
-window.irGoogleMaps = (dir) => {
-  window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`, '_blank');
-};
+window.toggleDetalle = id => document.getElementById(id)?.classList.toggle('open');
+window.irMaps = dir => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`,'_blank');
 
-// Fijar un cliente del día como contacto permanente
-window.fijarContacto = async (id) => {
-  const c = clientesHoy.find(x => x._id === id);
+window.fijarContacto = async id => {
+  const c = clientesHoy.find(x=>x._id===id);
   if (!c) return;
   setSyncState('loading');
-  const { _id, _col, fechaDia, ...datos } = c;
-  datos.fijo = true;
-  datos.createdAt = new Date().toISOString();
-  await addDoc(colContactos, datos);
+  const {_id,_col,fechaDia,...datos} = c;
+  await addDoc(colContactos, {...datos, fijo:true, createdAt:new Date().toISOString()});
   mostrarToast('📌 Guardado como contacto fijo');
 };
 
-// Historial
 window.cargarHistorial = async () => {
   const fecha = document.getElementById('hist-fecha').value;
   if (!fecha) return;
   const cont = document.getElementById('lista');
   cont.innerHTML = `<div class="empty"><div class="empty-icon">🔄</div><div>Cargando...</div></div>`;
   try {
-    const refDoc = doc(colHistorial, fecha);
-    const { getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-    const snap = await getDoc(refDoc);
-    if (!snap.exists() || !snap.data().clientes?.length) {
-      cont.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><div>No hay registros para el ${formatFecha(fecha)}</div></div>`;
+    const snap = await getDoc(doc(colHistorial, fecha));
+    if (!snap.exists()||!snap.data().clientes?.length) {
+      cont.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div>Sin registros para el ${formatFecha(fecha)}</div></div>`;
       return;
     }
     const lista = snap.data().clientes;
-    cont.innerHTML = `<div style="padding:8px 0 4px;font-size:12px;color:var(--muted);text-align:center">📅 ${formatFecha(fecha)} — ${lista.length} clientes</div>` +
-      lista.map((c, i) => {
-        const iniciales = c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    cont.innerHTML = `<div style="padding:8px 0 4px;font-size:12px;color:var(--muted);text-align:center">📅 ${formatFecha(fecha)} — ${lista.length} clientes</div>`+
+      lista.map((c,i)=>{
+        const ini=c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+        const dirS=(c.direccion||'').replace(/'/g,"\\'");
         return `<div class="cliente-card">
-          <div class="card-header" onclick="toggleDetalle('hist-${i}')">
-            <div class="avatar">${iniciales}</div>
+          <div class="card-header" onclick="toggleDetalle('h${i}')">
+            <div class="avatar">${ini}</div>
             <div class="card-info">
               <div class="card-nombre">${c.nombre}</div>
-              <div class="card-dir">${c.direccion||''}</div>
+              <div class="card-dir">${c.direccion||''}${c.localidad?', '+c.localidad:''}</div>
               <div class="card-badges">
                 ${c.hora?`<span class="badge badge-hora">${c.hora}</span>`:''}
                 ${c.tipo?`<span class="badge badge-tipo">${c.tipo}</span>`:''}
               </div>
             </div>
-            <button class="btn-mapa" onclick="event.stopPropagation();irGoogleMaps('${(c.direccion||'').replace(/'/g,"\\'")}')">🗺 Ir</button>
+            <button class="btn-mapa" onclick="event.stopPropagation();irMaps('${dirS}')">🗺 Ir</button>
           </div>
-          <div class="detalle" id="hist-${i}">
+          <div class="detalle" id="h${i}">
             <div class="detalle-grid">
               <div class="det-item"><div class="det-label">Plaga</div><div class="det-val">${c.plaga||'—'}</div></div>
               <div class="det-item"><div class="det-label">Franja</div><div class="det-val">${franjaLabel(c)}</div></div>
@@ -567,239 +497,215 @@ window.cargarHistorial = async () => {
         </div>`;
       }).join('');
   } catch(e) {
-    cont.innerHTML = `<div class="empty"><div class="empty-icon">❌</div><div>Error al cargar historial</div></div>`;
+    cont.innerHTML=`<div class="empty"><div class="empty-icon">❌</div><div>Error al cargar</div></div>`;
   }
 };
 
-// Chequear archivado al iniciar
-setTimeout(chequearArchivado, 3000);
-// Programar archivado a las 23:59
-function programarArchivado() {
-  const ahora = new Date();
-  const manana2359 = new Date(ahora);
-  manana2359.setHours(23, 59, 0, 0);
-  if (ahora >= manana2359) manana2359.setDate(manana2359.getDate() + 1);
-  const ms = manana2359 - ahora;
-  setTimeout(async () => {
-    await archivarDia(hoyStr(), clientesHoy);
-    programarArchivado();
-  }, ms);
-}
-programarArchivado();
-
-// ── SCAN ──────────────────────────────────────────────
+// ── SCAN ─────────────────────────────────────────────
 window.abrirScan = () => {
-  imagenBase64 = null;
-  clientesEscaneados = [];
-  document.getElementById('preview-img').style.display = 'none';
-  document.getElementById('preview-img').src = '';
-  document.getElementById('scan-resultado').innerHTML = '';
-  document.getElementById('btn-procesar').disabled = true;
+  imagenBase64=null; clientesEscaneados=[];
+  document.getElementById('preview-img').style.display='none';
+  document.getElementById('preview-img').src='';
+  document.getElementById('scan-resultado').innerHTML='';
+  document.getElementById('btn-procesar').disabled=true;
   document.getElementById('overlay-scan').classList.add('open');
 };
-window.cerrarScan = (e) => { if(e.target===document.getElementById('overlay-scan')) cerrarScanBtn(); };
+window.cerrarScan = e => { if(e.target===document.getElementById('overlay-scan')) cerrarScanBtn(); };
 window.cerrarScanBtn = () => document.getElementById('overlay-scan').classList.remove('open');
 
-window.onImageSelected = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    imagenBase64 = ev.target.result.split(',')[1];
-    const img = document.getElementById('preview-img');
-    img.src = ev.target.result;
-    img.style.display = 'block';
-    document.getElementById('btn-procesar').disabled = false;
-    document.getElementById('scan-resultado').innerHTML = '';
+window.onImageSelected = e => {
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload = ev => {
+    imagenBase64=ev.target.result.split(',')[1];
+    const img=document.getElementById('preview-img');
+    img.src=ev.target.result; img.style.display='block';
+    document.getElementById('btn-procesar').disabled=false;
+    document.getElementById('scan-resultado').innerHTML='';
   };
-  reader.readAsDataURL(file);
-  e.target.value = '';
+  reader.readAsDataURL(file); e.target.value='';
 };
 
 window.procesarPlanilla = async () => {
-  if (!imagenBase64) return;
-  const btnP = document.getElementById('btn-procesar');
-  btnP.disabled = true;
-  document.getElementById('scan-resultado').innerHTML = `<div class="scanning-msg"><div class="spin">🤖</div><div style="margin-top:10px">Leyendo la planilla...</div></div>`;
+  if(!imagenBase64) return;
+  const btnP=document.getElementById('btn-procesar');
+  btnP.disabled=true;
+  document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg"><div class="spin">🤖</div><div style="margin-top:10px">Leyendo la planilla...</div></div>`;
 
-  const prompt = `Sos un asistente que lee planillas de fumigación argentinas escritas a mano.
-Analizá la imagen y extraé TODOS los clientes que tengan nombre y dirección.
+  const prompt = `Sos un experto en leer planillas de fumigación de la empresa "La Palmeta" de Argentina. Estas planillas están impresas en una máquina antigua y tienen anotaciones manuscritas superpuestas.
 
-Para cada cliente identificá:
-- nombre: nombre completo
-- direccion: dirección completa
-- hora: hora en formato HH:MM
-- franjaDesde: hora de inicio de la franja (ej si dice 8/10 → "08:00")
-- franjaHasta: hora de fin de la franja (ej si dice 8/10 → "10:00")
-- tipo: "Ca/Jar" o verde → "Casa jardín"; "Ca/Per" o rosa → "Casa perímetro"; sin anotación → "Casa perímetro"
-- tel: teléfono si aparece
-- localidad: localidad si aparece
-- precio: tarifa numérica si aparece
-- obs: anotaciones especiales adicionales
+ESTRUCTURA DE LA PLANILLA:
+- Cada fila tiene: HORA | APELLIDO NOMBRE | [anotaciones manuscritas] | DIRECCIÓN | ZONA(código) | TELÉFONO | LOCALIDAD | TARIFA | PAGO
 
-Respondé ÚNICAMENTE con un array JSON válido, sin texto ni markdown.`;
+REGLAS CRÍTICAS:
+1. IGNORAR COMPLETAMENTE filas con líneas horizontales que las atraviesan (tachadas = canceladas)
+2. IGNORAR filas vacías que solo tienen la hora impresa sin nombre
+3. IGNORAR la columna "Zona" (son códigos internos como R15, C07, B08, LP, etc., NO son parte de la dirección)
+4. Los nombres están en formato APELLIDO NOMBRE (ej: "GARCIA CALVO SILVINA" → nombre completo)
+
+TIPO DE PROPIEDAD (anotación manuscrita junto al nombre):
+- "Ca/Jar", "CaJar", "C/JAR", "C/JA" con resaltado VERDE = "Casa jardín"
+- "JAR" solo (sin "Ca") con resaltado VERDE = "Jardín"
+- "Ca/Per", "CaPer", "CA/PER", "C/PER", "C/PE" con resaltado ROSA/NARANJA = "Casa perímetro"
+- Sin anotación = "Casa perímetro" por defecto
+
+FRANJA HORARIA (números escritos a mano junto al nombre):
+- Formato "X-Y", "X.Y", "X/Y" son franjas: ej "10-13" → franjaDesde:"10:00", franjaHasta:"13:00"
+- "11.15" → franjaDesde:"11:00", franjaHasta:"15:00"
+- "9.11" → franjaDesde:"09:00", franjaHasta:"11:00"
+
+OBSERVACIONES (anotar cualquier texto manuscrito adicional en amarillo/naranja/círculos):
+- Ejemplos: "TACAZO", "HORMIGAS", "POLILLAS", "falta conf.", "por la mañana", "1 año", "osd", "Aviso", "Gelmar"
+- También anotar si hay texto como "S. hay con de@ntos" u otras notas importantes
+
+TELÉFONO: extraer solo los números del campo teléfono (ignorar el código de zona al inicio como C07, R15, B05, etc.)
+
+PRECIO: número de la columna TARIFA (puede tener puntos como separador de miles: "135.000" = 135000)
+
+Para cada cliente válido (no tachado, con nombre y dirección) extraé:
+- nombre, direccion, localidad, tel, hora (HH:MM), franjaDesde (HH:MM), franjaHasta (HH:MM), tipo, precio (número), obs
+
+Respondé ÚNICAMENTE con un array JSON válido, sin texto adicional ni markdown. Si no hay clientes válidos, respondé [].`;
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 2000,
-        messages: [{ role: "user", content: [
-          { type: "image", source: { type: "base64", media_type: "image/jpeg", data: imagenBase64 } },
-          { type: "text", text: prompt }
+    const res = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:3000,
+        messages:[{role:"user",content:[
+          {type:"image",source:{type:"base64",media_type:"image/jpeg",data:imagenBase64}},
+          {type:"text",text:prompt}
         ]}]
       })
     });
     const data = await res.json();
-    const texto = data.content?.[0]?.text || '[]';
+    const texto = data.content?.[0]?.text||'[]';
     clientesEscaneados = JSON.parse(texto.replace(/```json|```/g,'').trim());
 
-    if (!clientesEscaneados.length) {
-      document.getElementById('scan-resultado').innerHTML = `<div class="scanning-msg">No se encontraron clientes. Intentá con otra foto.</div>`;
-      btnP.disabled = false;
-      return;
+    if(!clientesEscaneados.length){
+      document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg">No se encontraron clientes. Intentá con otra foto más nítida.</div>`;
+      btnP.disabled=false; return;
     }
 
-    let html = `<div style="margin-top:4px;font-size:12px;color:var(--muted);margin-bottom:8px">Se encontraron <strong>${clientesEscaneados.length} clientes</strong>. Revisá y confirmá:</div><div class="preview-list">`;
-    clientesEscaneados.forEach(c => {
-      const franja = (c.franjaDesde && c.franjaHasta) ? `${c.franjaDesde}-${c.franjaHasta}` : '';
-      html += `<div class="preview-card">
+    let html=`<div style="margin-top:4px;font-size:12px;color:var(--muted);margin-bottom:8px">✅ <strong>${clientesEscaneados.length} clientes encontrados</strong>. Revisá antes de confirmar:</div><div class="preview-list">`;
+    clientesEscaneados.forEach(c=>{
+      const franja=(c.franjaDesde&&c.franjaHasta)?`${c.franjaDesde}–${c.franjaHasta}`:'';
+      html+=`<div class="preview-card">
         <div class="preview-nombre">${c.nombre}</div>
-        <div class="preview-detalle">${c.hora?c.hora+' · ':''}${c.direccion}${c.localidad?', '+c.localidad:''}</div>
-        <div class="preview-detalle">${c.tipo}${franja?' · '+franja:''}${c.precio?' · $'+Number(c.precio).toLocaleString():''}${c.obs?' · '+c.obs:''}</div>
+        <div class="preview-detalle">${c.hora?c.hora+' · ':''}${c.direccion||''}${c.localidad?', '+c.localidad:''}</div>
+        <div class="preview-detalle">${c.tipo||''}${franja?' · '+franja:''}${c.precio?' · $'+Number(c.precio).toLocaleString():''}</div>
+        ${c.obs?`<div class="preview-obs">⚠ ${c.obs}</div>`:''}
       </div>`;
     });
-    html += `</div><button class="btn-confirmar" onclick="confirmarCarga()">✅ Cargar ${clientesEscaneados.length} clientes</button>`;
-    document.getElementById('scan-resultado').innerHTML = html;
-    btnP.disabled = false;
-  } catch(err) {
-    document.getElementById('scan-resultado').innerHTML = `<div class="scanning-msg" style="color:var(--rojo)">Error al procesar. Intentá de nuevo.</div>`;
-    btnP.disabled = false;
+    html+=`</div><button class="btn-confirmar" onclick="confirmarCarga()">✅ Cargar ${clientesEscaneados.length} clientes</button>`;
+    document.getElementById('scan-resultado').innerHTML=html;
+    btnP.disabled=false;
+  } catch(err){
+    document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg" style="color:var(--rojo)">Error al procesar. Intentá de nuevo.</div>`;
+    btnP.disabled=false;
   }
 };
 
 window.confirmarCarga = async () => {
   setSyncState('loading');
-  const ahora = new Date().toISOString();
-  for (const c of clientesEscaneados) {
-    await addDoc(colClientes, {
-      nombre: c.nombre||'',
-      direccion: c.direccion||'',
-      tel: c.tel||'',
-      franjaDesde: c.franjaDesde||'',
-      franjaHasta: c.franjaHasta||'',
-      hora: c.hora||'',
-      precio: parseFloat(c.precio)||0,
-      tipo: c.tipo||'Casa perímetro',
-      depto: '',
-      plaga: 'Cucarachas',
-      metodo: 'Mochila eléctrica',
-      gelCuca: false, gelHorm: false, gas: false,
-      deuda: false, montoDeuda: 0,
-      obs: c.obs||'',
-      fijo: false,
-      fechaDia: hoyStr(),
-      createdAt: ahora, updatedAt: ahora
+  const ahora=new Date().toISOString();
+  for(const c of clientesEscaneados){
+    await addDoc(colClientes,{
+      nombre:c.nombre||'', direccion:c.direccion||'', localidad:c.localidad||'',
+      tel:c.tel||'', hora:c.hora||'',
+      franjaDesde:c.franjaDesde||'', franjaHasta:c.franjaHasta||'',
+      precio:parseFloat(c.precio)||0, tipo:c.tipo||'Casa perímetro',
+      depto:'', plaga:'Cucarachas', metodo:'Mochila eléctrica',
+      gelCuca:false, gelHorm:false, gas:false,
+      deuda:false, montoDeuda:0, obs:c.obs||'',
+      fijo:false, fechaDia:hoyStr(), createdAt:ahora, updatedAt:ahora
     });
   }
   cerrarScanBtn();
   mostrarToast(`✅ ${clientesEscaneados.length} clientes cargados`);
 };
 
-// ── FORM MANUAL ───────────────────────────────────────
-window.abrirForm = (cliente = null) => {
-  editandoId = cliente ? cliente._id : null;
-  editandoCol = cliente ? (cliente._col || 'clientes') : 'clientes';
-  document.getElementById('modal-titulo').textContent = cliente ? 'Editar cliente' : 'Nuevo cliente';
-  const f = (id, val='') => { const el = document.getElementById(id); if(el) el.type==='checkbox' ? el.checked=!!val : el.value=val||''; };
-  if (cliente) {
-    f('f-nombre',cliente.nombre); f('f-direccion',cliente.direccion);
-    f('f-tel',cliente.tel); f('f-precio',cliente.precio);
-    f('f-hora',cliente.hora);
-    f('f-franja-desde',cliente.franjaDesde); f('f-franja-hasta',cliente.franjaHasta);
-    f('f-tipo',cliente.tipo); f('f-depto',cliente.depto);
-    f('f-plaga',cliente.plaga); f('f-metodo',cliente.metodo);
-    f('f-gel-cuca',cliente.gelCuca); f('f-gel-horm',cliente.gelHorm); f('f-gas',cliente.gas);
-    f('f-deuda',cliente.deuda); f('f-monto-deuda',cliente.montoDeuda); f('f-obs',cliente.obs);
-    f('f-fijo', cliente.fijo || cliente._col === 'contactos');
+// ── FORM ─────────────────────────────────────────────
+window.abrirForm = (cliente=null) => {
+  editandoId=cliente?cliente._id:null;
+  editandoCol=cliente?(cliente._col||'clientes'):'clientes';
+  document.getElementById('modal-titulo').textContent=cliente?'Editar cliente':'Nuevo cliente';
+  const f=(id,val='')=>{const el=document.getElementById(id);if(el)el.type==='checkbox'?el.checked=!!val:el.value=val||'';};
+  if(cliente){
+    f('f-nombre',cliente.nombre);f('f-direccion',cliente.direccion);
+    f('f-tel',cliente.tel);f('f-precio',cliente.precio);f('f-hora',cliente.hora);
+    f('f-franja-desde',cliente.franjaDesde);f('f-franja-hasta',cliente.franjaHasta);
+    f('f-tipo',cliente.tipo);f('f-depto',cliente.depto);
+    f('f-plaga',cliente.plaga);f('f-metodo',cliente.metodo);
+    f('f-gel-cuca',cliente.gelCuca);f('f-gel-horm',cliente.gelHorm);f('f-gas',cliente.gas);
+    f('f-deuda',cliente.deuda);f('f-monto-deuda',cliente.montoDeuda);f('f-obs',cliente.obs);
+    f('f-fijo',cliente.fijo||cliente._col==='contactos');
   } else {
     ['f-nombre','f-direccion','f-tel','f-hora','f-precio','f-depto','f-obs','f-monto-deuda','f-franja-desde','f-franja-hasta'].forEach(id=>f(id,''));
     ['f-gel-cuca','f-gel-horm','f-gas','f-deuda','f-fijo'].forEach(id=>f(id,false));
-    f('f-tipo','Casa perímetro'); f('f-plaga','Cucarachas'); f('f-metodo','Mochila eléctrica');
+    f('f-tipo','Casa perímetro');f('f-plaga','Cucarachas');f('f-metodo','Mochila eléctrica');
   }
-  window.toggleDepto(); window.toggleDeuda();
+  window.toggleDepto();window.toggleDeuda();
   document.getElementById('overlay').classList.add('open');
 };
-
-window.editarCliente = (id, col) => {
-  const lista = col === 'contactos' ? contactosFijos : clientesHoy;
-  const c = lista.find(x => x._id === id);
-  if (c) window.abrirForm(c);
+window.editarCliente=(id,col)=>{
+  const lista=col==='contactos'?contactosFijos:clientesHoy;
+  const c=lista.find(x=>x._id===id);if(c)window.abrirForm(c);
 };
-
-window.eliminarCliente = async (id, col, nombre) => {
-  if (!confirm(`¿Eliminar a ${nombre}?`)) return;
+window.eliminarCliente=async(id,col,nombre)=>{
+  if(!confirm(`¿Eliminar a ${nombre}?`))return;
   setSyncState('loading');
-  await deleteDoc(doc(db, col, id));
+  await deleteDoc(doc(db,col,id));
   mostrarToast('Cliente eliminado');
 };
+window.cerrarForm=e=>{if(e.target===document.getElementById('overlay'))window.cerrarFormBtn();};
+window.cerrarFormBtn=()=>document.getElementById('overlay').classList.remove('open');
+window.toggleDepto=()=>{ document.getElementById('grupo-depto').style.display=document.getElementById('f-tipo').value==='Departamento'?'block':'none'; };
+window.toggleDeuda=()=>{ document.getElementById('grupo-deuda').style.display=document.getElementById('f-deuda').checked?'block':'none'; };
 
-window.cerrarForm = (e) => { if(e.target===document.getElementById('overlay')) window.cerrarFormBtn(); };
-window.cerrarFormBtn = () => document.getElementById('overlay').classList.remove('open');
-window.toggleDepto = () => {
-  document.getElementById('grupo-depto').style.display = document.getElementById('f-tipo').value==='Departamento' ? 'block' : 'none';
-};
-window.toggleDeuda = () => {
-  document.getElementById('grupo-deuda').style.display = document.getElementById('f-deuda').checked ? 'block' : 'none';
-};
-
-window.guardarCliente = async () => {
-  const nombre = document.getElementById('f-nombre').value.trim();
-  const dir = document.getElementById('f-direccion').value.trim();
-  if (!nombre || !dir) { alert('Nombre y dirección son obligatorios'); return; }
-  const esFijo = document.getElementById('f-fijo').checked;
-  const datos = {
-    nombre, direccion: dir,
-    tel: document.getElementById('f-tel').value,
-    hora: document.getElementById('f-hora').value,
-    franjaDesde: document.getElementById('f-franja-desde').value,
-    franjaHasta: document.getElementById('f-franja-hasta').value,
-    precio: parseFloat(document.getElementById('f-precio').value)||0,
-    tipo: document.getElementById('f-tipo').value,
-    depto: document.getElementById('f-depto').value,
-    plaga: document.getElementById('f-plaga').value,
-    metodo: document.getElementById('f-metodo').value,
-    gelCuca: document.getElementById('f-gel-cuca').checked,
-    gelHorm: document.getElementById('f-gel-horm').checked,
-    gas: document.getElementById('f-gas').checked,
-    deuda: document.getElementById('f-deuda').checked,
-    montoDeuda: parseFloat(document.getElementById('f-monto-deuda').value)||0,
-    obs: document.getElementById('f-obs').value,
-    fijo: esFijo,
-    updatedAt: new Date().toISOString()
+window.guardarCliente=async()=>{
+  const nombre=document.getElementById('f-nombre').value.trim();
+  const dir=document.getElementById('f-direccion').value.trim();
+  if(!nombre||!dir){alert('Nombre y dirección son obligatorios');return;}
+  const esFijo=document.getElementById('f-fijo').checked;
+  const datos={
+    nombre,direccion:dir,
+    tel:document.getElementById('f-tel').value,
+    hora:document.getElementById('f-hora').value,
+    franjaDesde:document.getElementById('f-franja-desde').value,
+    franjaHasta:document.getElementById('f-franja-hasta').value,
+    precio:parseFloat(document.getElementById('f-precio').value)||0,
+    tipo:document.getElementById('f-tipo').value,
+    depto:document.getElementById('f-depto').value,
+    plaga:document.getElementById('f-plaga').value,
+    metodo:document.getElementById('f-metodo').value,
+    gelCuca:document.getElementById('f-gel-cuca').checked,
+    gelHorm:document.getElementById('f-gel-horm').checked,
+    gas:document.getElementById('f-gas').checked,
+    deuda:document.getElementById('f-deuda').checked,
+    montoDeuda:parseFloat(document.getElementById('f-monto-deuda').value)||0,
+    obs:document.getElementById('f-obs').value,
+    fijo:esFijo,updatedAt:new Date().toISOString()
   };
   setSyncState('loading');
-  const targetCol = esFijo ? colContactos : colClientes;
-  const targetColName = esFijo ? 'contactos' : 'clientes';
-  if (editandoId) {
-    await updateDoc(doc(db, editandoCol, editandoId), datos);
+  if(editandoId){
+    await updateDoc(doc(db,editandoCol,editandoId),datos);
     mostrarToast('Cliente actualizado ✓');
   } else {
-    datos.createdAt = new Date().toISOString();
-    if (!esFijo) datos.fechaDia = hoyStr();
-    await addDoc(targetCol, datos);
-    mostrarToast(esFijo ? '📌 Contacto fijo guardado ✓' : 'Cliente del día guardado ✓');
+    datos.createdAt=new Date().toISOString();
+    if(!esFijo) datos.fechaDia=hoyStr();
+    await addDoc(esFijo?colContactos:colClientes,datos);
+    mostrarToast(esFijo?'📌 Contacto fijo guardado ✓':'Cliente del día guardado ✓');
   }
   window.cerrarFormBtn();
 };
 
-function mostrarToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+function mostrarToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 </script>
 </body>
