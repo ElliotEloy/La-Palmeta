@@ -17,111 +17,165 @@
     --bg: #f5f7f5; --card: #fff; --border: rgba(0,0,0,0.1);
     --text: #1a1a1a; --muted: #666; --radius: 12px;
   }
-  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  body { font-family: -apple-system,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-  .header { background: var(--verde-dark); color: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; }
-  .header-logo { font-size: 22px; }
-  .header-titles { flex: 1; }
-  .header h1 { font-size: 18px; font-weight: 700; line-height: 1.1; }
-  .header-sub { font-size: 11px; opacity: 0.65; letter-spacing: .5px; }
-  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
-  .sync-dot.ok { background: #4ade80; }
-  .sync-dot.loading { background: #facc15; animation: pulse 1s infinite; }
-  .sync-dot.error { background: #f87171; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .header { background:var(--verde-dark); color:#fff; padding:14px 16px; display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:100; }
+  .header-logo { font-size:22px; }
+  .header-titles { flex:1; }
+  .header h1 { font-size:18px; font-weight:700; line-height:1.1; }
+  .header-sub { font-size:11px; opacity:.65; }
+  .sync-dot { width:8px; height:8px; border-radius:50%; background:#ccc; flex-shrink:0; }
+  .sync-dot.ok { background:#4ade80; }
+  .sync-dot.loading { background:#facc15; animation:pulse 1s infinite; }
+  .sync-dot.error { background:#f87171; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
 
-  .search-bar { padding: 12px 16px; background: var(--verde-dark); }
-  .search-bar input { width: 100%; padding: 10px 14px; border-radius: 24px; border: none; font-size: 15px; background: rgba(255,255,255,0.15); color: #fff; outline: none; }
-  .search-bar input::placeholder { color: rgba(255,255,255,0.6); }
+  .search-bar { padding:12px 16px; background:var(--verde-dark); }
+  .search-bar input { width:100%; padding:10px 14px; border-radius:24px; border:none; font-size:15px; background:rgba(255,255,255,.15); color:#fff; outline:none; }
+  .search-bar input::placeholder { color:rgba(255,255,255,.6); }
 
-  .tabs { display: flex; background: #fff; border-bottom: 1px solid var(--border); }
-  .tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 12px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; transition: all .2s; }
-  .tab.active { color: var(--verde); border-bottom-color: var(--verde); font-weight: 600; }
+  .tabs { display:flex; background:#fff; border-bottom:1px solid var(--border); }
+  .tab { flex:1; padding:10px 4px; text-align:center; font-size:12px; cursor:pointer; color:var(--muted); border-bottom:2px solid transparent; transition:all .2s; }
+  .tab.active { color:var(--verde); border-bottom-color:var(--verde); font-weight:600; }
 
-  .scan-bar { padding: 10px 16px; background: #fff; border-bottom: 1px solid var(--border); }
-  .btn-scan { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--verde-dark); color: #fff; border: none; border-radius: 10px; padding: 11px 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .action-bar { padding:10px 16px; background:#fff; border-bottom:1px solid var(--border); display:flex; gap:8px; }
+  .btn-action { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; border:none; border-radius:10px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; }
+  .btn-action.primary { background:var(--verde-dark); color:#fff; }
+  .btn-action.secondary { background:var(--verde-light); color:var(--verde-dark); }
 
-  .lista { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; padding-bottom: 90px; }
-  .cliente-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
-  .cliente-card.fijo { border-left: 3px solid var(--azul); }
-  .card-header { padding: 12px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
-  .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--verde-light); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; color: var(--verde-dark); flex-shrink: 0; }
-  .avatar.fijo { background: var(--azul-light); color: var(--azul); }
-  .card-info { flex: 1; min-width: 0; }
-  .card-nombre { font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-dir { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
-  .badge { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500; }
-  .badge-hora { background: var(--verde-light); color: var(--verde-dark); }
-  .badge-deuda { background: var(--rojo-light); color: var(--rojo); }
-  .badge-tipo { background: var(--azul-light); color: var(--azul); }
-  .badge-fijo { background: var(--azul-light); color: var(--azul); }
-  .btn-mapa { background: var(--verde); color: #fff; border: none; border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  /* RESUMEN DEL DÍA */
+  .resumen-dia { margin:12px 16px 0; background:var(--card); border-radius:var(--radius); border:1px solid var(--border); padding:12px 14px; }
+  .resumen-titulo { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+  .resumen-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  .resumen-item { text-align:center; }
+  .resumen-val { font-size:16px; font-weight:700; color:var(--verde-dark); }
+  .resumen-val.amber { color:var(--amber); }
+  .resumen-val.rojo { color:var(--rojo); }
+  .resumen-label { font-size:10px; color:var(--muted); margin-top:2px; }
 
-  .detalle { display: none; padding: 0 14px 14px; border-top: 1px solid var(--border); }
-  .detalle.open { display: block; }
-  .detalle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; margin-top: 12px; }
-  .det-item { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
-  .det-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-  .det-val { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 2px; }
-  .det-val.rojo { color: var(--rojo); }
-  .det-val.verde { color: var(--verde); }
-  .observaciones { background: var(--amber-light); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
-  .observaciones .det-label { color: var(--amber); }
-  .observaciones .det-val { font-size: 13px; font-weight: 400; color: #412402; }
-  .detalle-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-  .btn-edit { flex: 1; background: transparent; border: 1px solid var(--verde); color: var(--verde); border-radius: 20px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .btn-nav { flex: 1; background: var(--verde); color: #fff; border: none; border-radius: 20px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .btn-del { flex: 1; background: transparent; border: 1px solid var(--rojo); color: var(--rojo); border-radius: 20px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .btn-fijar { flex: 1; background: transparent; border: 1px solid var(--azul); color: var(--azul); border-radius: 20px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .lista { padding:12px 16px; display:flex; flex-direction:column; gap:10px; padding-bottom:90px; }
 
-  .historial-selector { padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-  .historial-selector label { font-size: 13px; color: var(--muted); white-space: nowrap; }
-  .historial-selector input { flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
+  /* CARDS */
+  .cliente-card { background:var(--card); border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; transition:box-shadow .2s; }
+  .cliente-card.fijo { border-left:3px solid var(--azul); }
+  .cliente-card.visitado { border-left:3px solid var(--verde); opacity:.85; }
+  .cliente-card.cobrado { border-left:3px solid var(--amber); }
+  .cliente-card.dragging { opacity:.4; }
+  .cliente-card.drag-over { border-top:3px solid var(--verde); }
+  .card-header { padding:12px 14px; display:flex; align-items:center; gap:10px; }
+  .drag-handle { font-size:16px; color:var(--muted); cursor:grab; padding:2px 2px; touch-action:none; flex-shrink:0; user-select:none; }
+  .avatar { width:40px; height:40px; border-radius:50%; background:var(--verde-light); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px; color:var(--verde-dark); flex-shrink:0; cursor:pointer; position:relative; }
+  .avatar.fijo { background:var(--azul-light); color:var(--azul); }
+  .avatar.visitado { background:#d1fae5; color:#065f46; }
+  .avatar.cobrado { background:var(--amber-light); color:var(--amber); }
+  .estado-badge { position:absolute; bottom:-2px; right:-2px; font-size:12px; }
+  .card-info { flex:1; min-width:0; cursor:pointer; }
+  .card-nombre { font-weight:600; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .card-dir { font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .card-badges { display:flex; gap:4px; flex-wrap:wrap; margin-top:3px; }
+  .badge { font-size:10px; padding:2px 7px; border-radius:20px; font-weight:500; }
+  .badge-hora { background:var(--verde-light); color:var(--verde-dark); }
+  .badge-deuda { background:var(--rojo-light); color:var(--rojo); }
+  .badge-tipo { background:var(--azul-light); color:var(--azul); }
+  .btn-mapa { background:var(--verde); color:#fff; border:none; border-radius:20px; padding:7px 12px; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; flex-shrink:0; }
 
-  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
-  .overlay.open { display: flex; align-items: flex-end; }
-  .modal { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-height: 92vh; overflow-y: auto; padding: 20px 16px 32px; }
-  .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
-  .btn-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--muted); }
-  .form-group { margin-bottom: 14px; }
-  .form-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: .4px; }
-  .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
-  .form-input:focus { border-color: var(--verde); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .form-section { font-size: 12px; font-weight: 700; color: var(--verde-dark); text-transform: uppercase; letter-spacing: .5px; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--verde-light); }
-  .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .toggle-label { font-size: 14px; color: var(--text); }
-  .toggle { position: relative; width: 44px; height: 24px; }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider { position: absolute; inset: 0; background: #ccc; border-radius: 24px; cursor: pointer; transition: .2s; }
-  .toggle-slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .2s; }
-  .toggle input:checked + .toggle-slider { background: var(--verde); }
-  .toggle input:checked + .toggle-slider:before { transform: translateX(20px); }
-  .btn-guardar { width: 100%; background: var(--verde); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+  .detalle { display:none; padding:0 14px 14px; border-top:1px solid var(--border); }
+  .detalle.open { display:block; }
 
-  .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
-  .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .fab { position: fixed; bottom: 24px; right: 20px; width: 56px; height: 56px; background: var(--verde); color: #fff; border: none; border-radius: 50%; font-size: 28px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25); z-index: 150; display: flex; align-items: center; justify-content: center; }
-  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 24px; font-size: 13px; z-index: 400; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
-  .toast.show { opacity: 1; }
+  /* BOTONES ESTADO */
+  .estado-btns { display:flex; gap:6px; margin:12px 0 8px; }
+  .btn-estado { flex:1; border:none; border-radius:10px; padding:10px 6px; font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px; }
+  .btn-estado.pendiente { background:var(--bg); color:var(--muted); border:1px solid var(--border); }
+  .btn-estado.visitado { background:#d1fae5; color:#065f46; }
+  .btn-estado.cobrado-btn { background:var(--amber-light); color:var(--amber); }
 
-  .scan-area { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; margin-bottom: 14px; background: var(--bg); }
-  .scan-area img { max-width: 100%; border-radius: 8px; margin-top: 10px; max-height: 220px; object-fit: contain; }
-  .scan-icon { font-size: 36px; margin-bottom: 8px; }
-  .scan-text { font-size: 14px; color: var(--muted); }
-  .btn-procesar { width: 100%; background: var(--verde-dark); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-procesar:disabled { opacity: .5; cursor: not-allowed; }
-  .preview-list { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-  .preview-card { background: var(--verde-light); border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(29,158,117,0.2); }
-  .preview-nombre { font-weight: 700; font-size: 14px; color: var(--verde-dark); }
-  .preview-detalle { font-size: 12px; color: #2d6b58; margin-top: 3px; }
-  .preview-obs { font-size: 11px; color: var(--amber); margin-top: 3px; font-style: italic; }
-  .btn-confirmar { width: 100%; background: var(--verde); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 14px; }
-  .scanning-msg { text-align: center; padding: 20px; color: var(--verde-dark); font-weight: 600; }
-  .spin { display: inline-block; animation: spin 1s linear infinite; font-size: 28px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .franja-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .detalle-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+  .det-item { background:var(--bg); border-radius:8px; padding:8px 10px; }
+  .det-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+  .det-val { font-size:13px; font-weight:600; color:var(--text); margin-top:2px; }
+  .det-val.rojo { color:var(--rojo); }
+  .det-val.verde { color:var(--verde); }
+  .observaciones { background:var(--amber-light); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
+  .observaciones .det-label { color:var(--amber); }
+  .observaciones .det-val { font-size:13px; font-weight:400; color:#412402; }
+
+  /* NOTA DE VISITA */
+  .nota-visita { margin-bottom:10px; }
+  .nota-visita textarea { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:13px; background:var(--bg); color:var(--text); outline:none; resize:none; font-family:inherit; }
+  .nota-visita textarea:focus { border-color:var(--verde); }
+  .btn-nota { background:var(--verde-light); color:var(--verde-dark); border:none; border-radius:8px; padding:6px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-top:4px; }
+
+  .detalle-actions { display:flex; gap:6px; flex-wrap:wrap; }
+  .btn-edit { flex:1; background:transparent; border:1px solid var(--verde); color:var(--verde); border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
+  .btn-nav { flex:1; background:var(--verde); color:#fff; border:none; border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
+  .btn-call { flex:1; background:var(--azul-light); color:var(--azul); border:none; border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
+  .btn-del { background:transparent; border:1px solid var(--rojo); color:var(--rojo); border-radius:20px; padding:8px 14px; font-size:12px; font-weight:600; cursor:pointer; }
+  .btn-fijar { flex:1; background:transparent; border:1px solid var(--azul); color:var(--azul); border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
+
+  .historial-selector { padding:12px 16px; background:#fff; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
+  .historial-selector label { font-size:13px; color:var(--muted); white-space:nowrap; }
+  .historial-selector input { flex:1; padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:var(--bg); outline:none; }
+
+  /* MODALES */
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; }
+  .overlay.open { display:flex; align-items:flex-end; }
+  .modal { background:#fff; border-radius:20px 20px 0 0; width:100%; max-height:92vh; overflow-y:auto; padding:20px 16px 32px; }
+  .modal-title { font-size:17px; font-weight:700; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
+  .btn-close { background:none; border:none; font-size:24px; cursor:pointer; color:var(--muted); }
+  .form-group { margin-bottom:14px; }
+  .form-label { font-size:12px; color:var(--muted); font-weight:600; margin-bottom:4px; display:block; text-transform:uppercase; letter-spacing:.4px; }
+  .form-input { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:var(--bg); color:var(--text); outline:none; }
+  .form-input:focus { border-color:var(--verde); }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .form-section { font-size:12px; font-weight:700; color:var(--verde-dark); text-transform:uppercase; letter-spacing:.5px; margin:16px 0 8px; padding-bottom:4px; border-bottom:1px solid var(--verde-light); }
+  .toggle-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .toggle-label { font-size:14px; color:var(--text); }
+  .toggle { position:relative; width:44px; height:24px; }
+  .toggle input { opacity:0; width:0; height:0; }
+  .toggle-slider { position:absolute; inset:0; background:#ccc; border-radius:24px; cursor:pointer; transition:.2s; }
+  .toggle-slider:before { content:''; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
+  .toggle input:checked + .toggle-slider { background:var(--verde); }
+  .toggle input:checked + .toggle-slider:before { transform:translateX(20px); }
+  .btn-guardar { width:100%; background:var(--verde); color:#fff; border:none; border-radius:24px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; margin-top:8px; }
+
+  .empty { text-align:center; padding:40px 20px; color:var(--muted); }
+  .empty-icon { font-size:40px; margin-bottom:12px; }
+  .fab { position:fixed; bottom:24px; right:20px; width:56px; height:56px; background:var(--verde); color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.25); z-index:150; display:flex; align-items:center; justify-content:center; }
+  .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#1a1a1a; color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; z-index:400; opacity:0; transition:opacity .3s; pointer-events:none; white-space:nowrap; }
+  .toast.show { opacity:1; }
+
+  /* SCAN */
+  .scan-area { border:2px dashed var(--border); border-radius:12px; padding:24px; text-align:center; cursor:pointer; margin-bottom:14px; background:var(--bg); }
+  .scan-area img { max-width:100%; border-radius:8px; margin-top:10px; max-height:200px; object-fit:contain; }
+  .scan-icon { font-size:36px; margin-bottom:8px; }
+  .scan-text { font-size:14px; color:var(--muted); }
+  .btn-procesar { width:100%; background:var(--verde-dark); color:#fff; border:none; border-radius:24px; padding:14px; font-size:15px; font-weight:700; cursor:pointer; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .btn-procesar:disabled { opacity:.5; cursor:not-allowed; }
+  .scan-mitad-btns { display:flex; gap:8px; margin-bottom:10px; }
+  .btn-mitad { flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px; font-size:13px; cursor:pointer; font-weight:600; }
+  .btn-mitad.activo { background:var(--verde-light); border-color:var(--verde); color:var(--verde-dark); }
+  .preview-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+  .preview-card { background:var(--verde-light); border-radius:10px; padding:12px 14px; }
+  .preview-card.fallido { background:var(--rojo-light); }
+  .preview-nombre { font-weight:700; font-size:14px; color:var(--verde-dark); }
+  .preview-card.fallido .preview-nombre { color:var(--rojo); }
+  .preview-detalle { font-size:12px; color:#2d6b58; margin-top:3px; }
+  .preview-obs { font-size:11px; color:var(--amber); margin-top:3px; font-style:italic; }
+  .btn-confirmar { width:100%; background:var(--verde); color:#fff; border:none; border-radius:24px; padding:14px; font-size:15px; font-weight:700; cursor:pointer; margin-top:14px; }
+  .btn-reintentar { width:100%; background:var(--amber-light); color:var(--amber); border:none; border-radius:24px; padding:10px; font-size:13px; font-weight:700; cursor:pointer; margin-top:8px; }
+  .scanning-msg { text-align:center; padding:20px; color:var(--verde-dark); font-weight:600; }
+  .spin { display:inline-block; animation:spin 1s linear infinite; font-size:28px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .franja-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+
+  /* BUSCADOR CONTACTOS */
+  .contacto-search input { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:var(--bg); outline:none; margin-bottom:10px; }
+  .contacto-lista { max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
+  .contacto-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--bg); border-radius:10px; border:1px solid transparent; }
+  .contacto-item-info { flex:1; min-width:0; }
+  .contacto-item-nombre { font-weight:600; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .contacto-item-dir { font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .contacto-item-add { background:var(--verde); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -144,11 +198,22 @@
   <div class="tab" onclick="cambiarTab('historial',this)">Historial</div>
 </div>
 
-<div id="scan-bar-wrapper">
-  <div class="scan-bar">
-    <button class="btn-scan" onclick="abrirScan()">📷 Escanear planilla del día</button>
+<div id="action-bar-hoy">
+  <div class="action-bar">
+    <button class="btn-action primary" onclick="abrirScan()">📷 Escanear</button>
+    <button class="btn-action secondary" onclick="abrirBuscadorContactos()">📋 Armar planilla</button>
+  </div>
+  <div id="resumen-dia" class="resumen-dia" style="display:none">
+    <div class="resumen-titulo">Resumen del día</div>
+    <div class="resumen-grid">
+      <div class="resumen-item"><div class="resumen-val" id="r-total">0</div><div class="resumen-label">Clientes</div></div>
+      <div class="resumen-item"><div class="resumen-val visitado" id="r-visitados">0</div><div class="resumen-label">Visitados</div></div>
+      <div class="resumen-item"><div class="resumen-val amber" id="r-cobrados">0</div><div class="resumen-label">Cobrados</div></div>
+      <div class="resumen-item"><div class="resumen-val verde" id="r-monto">$0</div><div class="resumen-label">Cobrado</div></div>
+    </div>
   </div>
 </div>
+
 <div id="historial-bar" style="display:none">
   <div class="historial-selector">
     <label>📅 Ver día:</label>
@@ -164,30 +229,75 @@
 <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="onImageSelected(event)">
 
 <!-- MODAL ESCANEO -->
-<div class="overlay" id="overlay-scan" onclick="cerrarScan(event)">
+<div class="overlay" id="overlay-scan" onclick="cerrarOv('overlay-scan',event)">
   <div class="modal">
     <div class="modal-title">
       <span>📷 Escanear planilla</span>
-      <button class="btn-close" onclick="cerrarScanBtn()">✕</button>
+      <button class="btn-close" onclick="cOv('overlay-scan')">✕</button>
+    </div>
+    <div class="scan-mitad-btns">
+      <button class="btn-mitad activo" id="btn-completa" onclick="setScanMode('completa')">📄 Planilla completa</button>
+      <button class="btn-mitad" id="btn-mitad-arr" onclick="setScanMode('arriba')">⬆ Mitad superior</button>
+      <button class="btn-mitad" id="btn-mitad-ab" onclick="setScanMode('abajo')">⬇ Mitad inferior</button>
     </div>
     <div class="scan-area" onclick="document.getElementById('file-input').click()">
       <div class="scan-icon">📋</div>
-      <div class="scan-text">Tocá para sacar foto o elegir imagen</div>
+      <div class="scan-text" id="scan-text-hint">Tocá para sacar foto o elegir imagen</div>
       <img id="preview-img" style="display:none">
     </div>
     <div id="scan-resultado"></div>
-    <button class="btn-procesar" id="btn-procesar" onclick="procesarPlanilla()" disabled>
-      🤖 Leer planilla con IA
-    </button>
+    <button class="btn-procesar" id="btn-procesar" onclick="procesarPlanilla()" disabled>🤖 Leer con IA</button>
   </div>
 </div>
 
-<!-- MODAL CLIENTE -->
-<div class="overlay" id="overlay" onclick="cerrarForm(event)">
+<!-- MODAL BUSCADOR CONTACTOS -->
+<div class="overlay" id="overlay-contactos" onclick="cerrarOv('overlay-contactos',event)">
+  <div class="modal">
+    <div class="modal-title">
+      <span>📋 Armar planilla del día</span>
+      <button class="btn-close" onclick="cOv('overlay-contactos')">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px">Tocá + para agregar un contacto al día. Podés editar hora y franja antes de confirmar.</p>
+    <div class="contacto-search">
+      <input type="text" id="buscar-contacto" placeholder="Buscar por nombre o dirección..." oninput="filtrarContactos()">
+    </div>
+    <div class="contacto-lista" id="contacto-lista"></div>
+  </div>
+</div>
+
+<!-- MODAL AGREGAR CONTACTO AL DÍA (con edición previa) -->
+<div class="overlay" id="overlay-agregar" onclick="cerrarOv('overlay-agregar',event)">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="agregar-titulo">Agregar al día</span>
+      <button class="btn-close" onclick="cOv('overlay-agregar')">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Ajustá hora y franja para hoy. El resto se copia del contacto.</p>
+    <div class="form-group">
+      <label class="form-label">Hora en planilla *</label>
+      <input class="form-input" id="ag-hora" type="time">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Franja horaria (desde / hasta)</label>
+      <div class="franja-row">
+        <input class="form-input" id="ag-franja-desde" type="time">
+        <input class="form-input" id="ag-franja-hasta" type="time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observación especial de hoy (opcional)</label>
+      <textarea class="form-input" id="ag-obs-hoy" rows="2" placeholder="Ej: pagar con transf., perro encerrado..."></textarea>
+    </div>
+    <button class="btn-guardar" onclick="confirmarAgregarAlDia()">Agregar al día</button>
+  </div>
+</div>
+
+<!-- MODAL CLIENTE (crear/editar) -->
+<div class="overlay" id="overlay" onclick="cerrarOv('overlay',event)">
   <div class="modal">
     <div class="modal-title">
       <span id="modal-titulo">Nuevo cliente</span>
-      <button class="btn-close" onclick="cerrarFormBtn()">✕</button>
+      <button class="btn-close" onclick="cOv('overlay')">✕</button>
     </div>
     <div class="form-section">Datos personales</div>
     <div class="form-group">
@@ -197,6 +307,10 @@
     <div class="form-group">
       <label class="form-label">Dirección *</label>
       <input class="form-input" id="f-direccion" type="text" placeholder="Ej: Av. Corrientes 1234, CABA">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Verificar dirección en Maps</label>
+      <button type="button" onclick="verificarDireccion()" style="width:100%;background:var(--azul-light);color:var(--azul);border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">🗺 Abrir en Google Maps para verificar</button>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -209,14 +323,14 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Hora en planilla</label>
+      <label class="form-label">Hora habitual</label>
       <input class="form-input" id="f-hora" type="time">
     </div>
     <div class="form-group">
-      <label class="form-label">Franja horaria (desde / hasta)</label>
+      <label class="form-label">Franja habitual (desde / hasta)</label>
       <div class="franja-row">
-        <input class="form-input" id="f-franja-desde" type="time" placeholder="Desde">
-        <input class="form-input" id="f-franja-hasta" type="time" placeholder="Hasta">
+        <input class="form-input" id="f-franja-desde" type="time">
+        <input class="form-input" id="f-franja-hasta" type="time">
       </div>
     </div>
     <div class="form-section">Tipo de propiedad</div>
@@ -224,10 +338,11 @@
       <div class="form-group">
         <label class="form-label">Tipo</label>
         <select class="form-input" id="f-tipo" onchange="toggleDepto()">
-          <option value="Casa perímetro">Casa perímetro</option>
-          <option value="Casa jardín">Casa jardín</option>
-          <option value="Departamento">Departamento</option>
-          <option value="Local">Local</option>
+          <option>Casa perímetro</option>
+          <option>Casa jardín</option>
+          <option>Jardín</option>
+          <option>Departamento</option>
+          <option>Local</option>
         </select>
       </div>
       <div class="form-group" id="grupo-depto" style="display:none">
@@ -240,21 +355,14 @@
       <div class="form-group">
         <label class="form-label">Plaga</label>
         <select class="form-input" id="f-plaga">
-          <option>Cucarachas</option>
-          <option>Hormigas</option>
-          <option>Ratas</option>
-          <option>Abejas</option>
-          <option>Polillas</option>
-          <option>Mixto</option>
-          <option>Otro</option>
+          <option>Cucarachas</option><option>Hormigas</option><option>Ratas</option>
+          <option>Abejas</option><option>Polillas</option><option>Mixto</option><option>Otro</option>
         </select>
       </div>
       <div class="form-group">
         <label class="form-label">Método</label>
         <select class="form-input" id="f-metodo">
-          <option>Mochila eléctrica</option>
-          <option>Tacazo</option>
-          <option>Ambos</option>
+          <option>Mochila eléctrica</option><option>Tacazo</option><option>Ambos</option>
         </select>
       </div>
     </div>
@@ -280,13 +388,8 @@
       <input class="form-input" id="f-monto-deuda" type="number" placeholder="0">
     </div>
     <div class="form-group">
-      <label class="form-label">Observaciones</label>
-      <textarea class="form-input" id="f-obs" rows="3" placeholder="Ej: Tiene perro, dejar picadura en fondo..."></textarea>
-    </div>
-    <div class="form-section">Tipo de registro</div>
-    <div class="toggle-row">
-      <span class="toggle-label">📌 Guardar como contacto fijo</span>
-      <label class="toggle"><input type="checkbox" id="f-fijo"><span class="toggle-slider"></span></label>
+      <label class="form-label">Observaciones fijas</label>
+      <textarea class="form-input" id="f-obs" rows="3" placeholder="Ej: Tiene perro, tacazo, hormigas techo..."></textarea>
     </div>
     <button class="btn-guardar" onclick="guardarCliente()">Guardar</button>
   </div>
@@ -294,7 +397,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBopAo2CTPxk7UPU_Adtty4r2W9WWtDMIA",
@@ -307,124 +410,168 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const colClientes  = collection(db, "clientes");
-const colContactos = collection(db, "contactos");
-const colHistorial = collection(db, "historial");
+const colClientes  = collection(db,"clientes");
+const colContactos = collection(db,"contactos");
+const colHistorial = collection(db,"historial");
 
-let clientesHoy = [], contactosFijos = [];
-let tabActual = 'hoy', editandoId = null, editandoCol = 'clientes';
-let imagenBase64 = null, clientesEscaneados = [];
+let clientesHoy=[], contactosFijos=[];
+let tabActual='hoy', editandoId=null, editandoCol='clientes';
+let imagenBase64=null, clientesEscaneados=[], clientesFallidos=[];
+let scanMode='completa';
+let contactoParaAgregar=null;
+let dragSrcIdx=null;
 
 const syncDot = document.getElementById('sync-dot');
-const setSyncState = s => syncDot.className = 'sync-dot ' + s;
-
-function hoyStr() { return new Date().toISOString().split('T')[0]; }
-function formatFecha(s) { const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
+const setSyncState = s => syncDot.className='sync-dot '+s;
+const hoyStr = () => new Date().toISOString().split('T')[0];
+const formatFecha = s => { const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
 document.getElementById('header-fecha').textContent = formatFecha(hoyStr());
 
 onSnapshot(colClientes, snap => {
-  clientesHoy = snap.docs.map(d => ({...d.data(), _id:d.id, _col:'clientes'}));
+  clientesHoy = snap.docs.map(d=>({...d.data(),_id:d.id,_col:'clientes'}));
   setSyncState('ok');
-  if (['hoy','deuda'].includes(tabActual)) renderizar();
-}, () => setSyncState('error'));
+  if(['hoy','deuda'].includes(tabActual)) renderizar();
+}, ()=>setSyncState('error'));
 
 onSnapshot(colContactos, snap => {
-  contactosFijos = snap.docs.map(d => ({...d.data(), _id:d.id, _col:'contactos', fijo:true}));
+  contactosFijos = snap.docs.map(d=>({...d.data(),_id:d.id,_col:'contactos',fijo:true}));
   setSyncState('ok');
-  if (tabActual==='contactos') renderizar();
-}, () => setSyncState('error'));
+  if(tabActual==='contactos') renderizar();
+  filtrarContactos();
+}, ()=>setSyncState('error'));
 
-// Archivado automático
-async function chequearArchivado() {
-  const ultimo = localStorage.getItem('palmeta_archivado');
-  const hoy = hoyStr();
-  if (ultimo === hoy || !clientesHoy.length) return;
-  const ayer = new Date(); ayer.setDate(ayer.getDate()-1);
-  const ayerStr = ayer.toISOString().split('T')[0];
-  const viejos = clientesHoy.filter(c => c.fechaDia && c.fechaDia !== hoy);
-  if (viejos.length) { await archivarDia(ayerStr, viejos); }
-  localStorage.setItem('palmeta_archivado', hoy);
-}
+// Archivado
 async function archivarDia(fecha, lista) {
+  if(!lista.length) return;
   setSyncState('loading');
-  const batch = writeBatch(db);
-  batch.set(doc(colHistorial, fecha), {
-    fecha, archivedAt: new Date().toISOString(),
-    clientes: lista.map(({_id,_col,...r})=>r)
-  });
-  lista.forEach(c => batch.delete(doc(db,'clientes',c._id)));
+  const batch=writeBatch(db);
+  batch.set(doc(colHistorial,fecha),{fecha,archivedAt:new Date().toISOString(),clientes:lista.map(({_id,_col,...r})=>r)});
+  lista.forEach(c=>batch.delete(doc(db,'clientes',c._id)));
   await batch.commit();
   mostrarToast(`📦 Día ${formatFecha(fecha)} archivado`);
 }
-function programarArchivado() {
-  const ahora = new Date();
-  const t2359 = new Date(ahora); t2359.setHours(23,59,0,0);
-  if (ahora >= t2359) t2359.setDate(t2359.getDate()+1);
-  setTimeout(async () => { await archivarDia(hoyStr(), clientesHoy); programarArchivado(); }, t2359-ahora);
+async function chequearArchivado() {
+  const ultimo=localStorage.getItem('palmeta_archivado');
+  const hoy=hoyStr();
+  if(ultimo===hoy) return;
+  const viejos=clientesHoy.filter(c=>c.fechaDia&&c.fechaDia!==hoy);
+  if(viejos.length){ const d=new Date(); d.setDate(d.getDate()-1); await archivarDia(d.toISOString().split('T')[0],viejos); }
+  localStorage.setItem('palmeta_archivado',hoy);
 }
-setTimeout(chequearArchivado, 3000);
+function programarArchivado(){
+  const ahora=new Date(), t=new Date(ahora);
+  t.setHours(23,59,0,0);
+  if(ahora>=t) t.setDate(t.getDate()+1);
+  setTimeout(async()=>{ await archivarDia(hoyStr(),clientesHoy); programarArchivado(); },t-ahora);
+}
+setTimeout(chequearArchivado,3000);
 programarArchivado();
 
-window.filtrar = () => renderizar(document.getElementById('buscar').value.toLowerCase());
-window.cambiarTab = (tab, el) => {
-  tabActual = tab;
+// Resumen del día
+function actualizarResumen() {
+  const lista = clientesHoy;
+  if(!lista.length){ document.getElementById('resumen-dia').style.display='none'; return; }
+  document.getElementById('resumen-dia').style.display='block';
+  const visitados = lista.filter(c=>c.estado==='visitado'||c.estado==='cobrado').length;
+  const cobrados = lista.filter(c=>c.estado==='cobrado').length;
+  const monto = lista.filter(c=>c.estado==='cobrado').reduce((s,c)=>s+Number(c.precio||0),0);
+  document.getElementById('r-total').textContent=lista.length;
+  document.getElementById('r-visitados').textContent=visitados;
+  document.getElementById('r-cobrados').textContent=cobrados;
+  document.getElementById('r-monto').textContent='$'+monto.toLocaleString();
+}
+
+window.cerrarOv = (id,e)=>{ if(e.target===document.getElementById(id)) cOv(id); };
+window.cOv = id => document.getElementById(id).classList.remove('open');
+window.filtrar = ()=>renderizar(document.getElementById('buscar').value.toLowerCase());
+
+window.cambiarTab = (tab,el)=>{
+  tabActual=tab;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('scan-bar-wrapper').style.display = tab==='hoy'?'block':'none';
-  document.getElementById('historial-bar').style.display = tab==='historial'?'block':'none';
-  if (tab==='historial') { document.getElementById('hist-fecha').value=hoyStr(); cargarHistorial(); }
+  document.getElementById('action-bar-hoy').style.display=tab==='hoy'?'block':'none';
+  document.getElementById('historial-bar').style.display=tab==='historial'?'block':'none';
+  if(tab==='historial'){ document.getElementById('hist-fecha').value=hoyStr(); cargarHistorial(); }
   else renderizar();
 };
 
-function franjaLabel(c) {
-  if (c.franjaDesde && c.franjaHasta) return `${c.franjaDesde} - ${c.franjaHasta}`;
-  return c.franja || '—';
-}
+const franjaLabel = c=>(c.franjaDesde&&c.franjaHasta)?`${c.franjaDesde}–${c.franjaHasta}`:(c.franja||'—');
 
-function renderizar(q='') {
-  q = q || document.getElementById('buscar').value.toLowerCase();
-  let lista = [];
-  if (tabActual==='hoy') { lista=[...clientesHoy].sort((a,b)=>(a.hora||'').localeCompare(b.hora||'')); }
-  else if (tabActual==='contactos') { lista=contactosFijos; }
-  else if (tabActual==='deuda') { lista=[...clientesHoy,...contactosFijos].filter(c=>c.deuda); }
-  if (q) lista=lista.filter(c=>c.nombre.toLowerCase().includes(q)||(c.direccion||'').toLowerCase().includes(q));
-  const cont = document.getElementById('lista');
-  if (!lista.length) {
-    const m={hoy:['📋','No hay clientes para hoy'],contactos:['👥','Sin contactos fijos'],deuda:['✅','Sin deudas']};
+function renderizar(q=''){
+  q=q||document.getElementById('buscar').value.toLowerCase();
+  let lista=[];
+  if(tabActual==='hoy'){
+    lista=[...clientesHoy].sort((a,b)=>{
+      const ao=a.orden??999, bo=b.orden??999;
+      if(ao!==bo) return ao-bo;
+      return (a.hora||'').localeCompare(b.hora||'');
+    });
+    actualizarResumen();
+  } else if(tabActual==='contactos') lista=contactosFijos;
+  else if(tabActual==='deuda') lista=[...clientesHoy,...contactosFijos].filter(c=>c.deuda);
+  if(q) lista=lista.filter(c=>c.nombre.toLowerCase().includes(q)||(c.direccion||'').toLowerCase().includes(q));
+  const cont=document.getElementById('lista');
+  if(!lista.length){
+    const m={hoy:['📋','No hay clientes para hoy.\nUsá "Armar planilla" o "Escanear".'],contactos:['👥','Sin contactos fijos'],deuda:['✅','Sin deudas']};
     const [i,t]=m[tabActual]||['🔍','Sin resultados'];
-    cont.innerHTML=`<div class="empty"><div class="empty-icon">${i}</div><div>${t}</div></div>`;
+    cont.innerHTML=`<div class="empty"><div class="empty-icon">${i}</div><div style="white-space:pre-line">${t}</div></div>`;
     return;
   }
-  cont.innerHTML = lista.map(c=>cardHTML(c)).join('');
+  cont.innerHTML=lista.map((c,i)=>cardHTML(c,i)).join('');
+  if(tabActual==='hoy') initDrag();
 }
 
-function cardHTML(c) {
-  const ini = c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  const esFijo = c.fijo||c._col==='contactos';
-  const col = c._col||'clientes';
-  const dirS = (c.direccion||'').replace(/'/g,"\\'");
-  const nomS = c.nombre.replace(/'/g,"\\'");
+function estadoClase(c){
+  if(c.estado==='cobrado') return 'cobrado';
+  if(c.estado==='visitado') return 'visitado';
+  return '';
+}
+function estadoEmoji(c){
+  if(c.estado==='cobrado') return '💰';
+  if(c.estado==='visitado') return '✅';
+  return '';
+}
+
+function cardHTML(c,idx){
+  const ini=c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const esFijo=c.fijo||c._col==='contactos';
+  const col=c._col||'clientes';
+  const dirFull=[(c.direccion||''),(c.localidad||'')].filter(Boolean).join(', ');
+  const dirS=dirFull.replace(/'/g,"\\'");
+  const nomS=c.nombre.replace(/'/g,"\\'");
+  const ec=estadoClase(c);
+  const esHoy=tabActual==='hoy';
   return `
-  <div class="cliente-card${esFijo?' fijo':''}">
-    <div class="card-header" onclick="toggleDetalle('det-${c._id}')">
-      <div class="avatar${esFijo?' fijo':''}">${ini}</div>
-      <div class="card-info">
+  <div class="cliente-card${esFijo&&!esHoy?' fijo':''}${ec?' '+ec:''}" 
+       id="card-${c._id}" data-id="${c._id}" data-idx="${idx}"
+       ${esHoy?'draggable="true"':''}>
+    <div class="card-header">
+      ${esHoy?`<span class="drag-handle">⠿</span>`:''}
+      <div class="avatar${esFijo&&!esHoy?' fijo':''}${ec?' '+ec:''}" onclick="toggleDetalle('det-${c._id}')">
+        ${ini}<span class="estado-badge">${estadoEmoji(c)}</span>
+      </div>
+      <div class="card-info" onclick="toggleDetalle('det-${c._id}')">
         <div class="card-nombre">${c.nombre}</div>
-        <div class="card-dir">${c.direccion||''}${c.localidad?', '+c.localidad:''}</div>
+        <div class="card-dir">${dirFull}</div>
         <div class="card-badges">
           ${c.hora?`<span class="badge badge-hora">${c.hora}</span>`:''}
           ${c.tipo?`<span class="badge badge-tipo">${c.tipo}</span>`:''}
-          ${esFijo?`<span class="badge badge-fijo">📌 Fijo</span>`:''}
           ${c.deuda?`<span class="badge badge-deuda">Debe $${Number(c.montoDeuda||0).toLocaleString()}</span>`:''}
         </div>
       </div>
-      <button class="btn-mapa" onclick="event.stopPropagation();irMaps('${dirS}${c.localidad?', '+c.localidad:''}')">🗺 Ir</button>
+      <button class="btn-mapa" onclick="irMaps('${dirS}')">🗺 Ir</button>
     </div>
     <div class="detalle" id="det-${c._id}">
+      ${esHoy?`
+      <div class="estado-btns">
+        <button class="btn-estado${c.estado==='visitado'?' visitado':' pendiente'}" onclick="setEstado('${c._id}','visitado')">✅ Visitado</button>
+        <button class="btn-estado${c.estado==='cobrado'?' cobrado-btn':' pendiente'}" onclick="setEstado('${c._id}','cobrado')">💰 Cobrado</button>
+        <button class="btn-estado pendiente" onclick="setEstado('${c._id}','')">↩ Reset</button>
+      </div>`:''}
       <div class="detalle-grid">
         <div class="det-item"><div class="det-label">Plaga</div><div class="det-val">${c.plaga||'—'}</div></div>
         <div class="det-item"><div class="det-label">Método</div><div class="det-val">${c.metodo||'—'}</div></div>
-        <div class="det-item"><div class="det-label">Gel cucaracha</div><div class="det-val ${c.gelCuca?'verde':'rojo'}">${c.gelCuca?'Sí':'No'}</div></div>
+        <div class="det-item"><div class="det-label">Gel cuca</div><div class="det-val ${c.gelCuca?'verde':'rojo'}">${c.gelCuca?'Sí':'No'}</div></div>
         <div class="det-item"><div class="det-label">Gel hormiga</div><div class="det-val ${c.gelHorm?'verde':'rojo'}">${c.gelHorm?'Sí':'No'}</div></div>
         <div class="det-item"><div class="det-label">Bajar gas</div><div class="det-val ${c.gas?'verde':'rojo'}">${c.gas?'Sí':'No'}</div></div>
         <div class="det-item"><div class="det-label">Franja</div><div class="det-val">${franjaLabel(c)}</div></div>
@@ -434,89 +581,226 @@ function cardHTML(c) {
         ${c.tel?`<div class="det-item"><div class="det-label">Teléfono</div><div class="det-val">${c.tel}</div></div>`:''}
       </div>
       ${c.obs?`<div class="observaciones"><div class="det-label">⚠ Observaciones</div><div class="det-val">${c.obs}</div></div>`:''}
+      ${esHoy?`
+      <div class="nota-visita">
+        <div class="det-label" style="margin-bottom:4px">📝 Nota de visita</div>
+        <textarea id="nota-${c._id}" rows="2" placeholder="Ej: no había nadie, reprogramar, perro suelto...">${c.notaVisita||''}</textarea>
+        <button class="btn-nota" onclick="guardarNota('${c._id}')">Guardar nota</button>
+      </div>`:''}
       <div class="detalle-actions">
         <button class="btn-edit" onclick="editarCliente('${c._id}','${col}')">✏ Editar</button>
-        <button class="btn-nav" onclick="irMaps('${dirS}${c.localidad?', '+c.localidad:''}')">🗺 Ir</button>
-        ${!esFijo?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
+        <button class="btn-nav" onclick="irMaps('${dirS}')">🗺 Ir</button>
+        ${c.tel?`<button class="btn-call" onclick="llamar('${c.tel}')">📞 Llamar</button>`:''}
+        ${esHoy&&!esFijo?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
         <button class="btn-del" onclick="eliminarCliente('${c._id}','${col}','${nomS}')">🗑</button>
       </div>
     </div>
   </div>`;
 }
 
-window.toggleDetalle = id => document.getElementById(id)?.classList.toggle('open');
+window.toggleDetalle = id => document.getElementById('det-'+id)?.classList.toggle('open');
 window.irMaps = dir => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`,'_blank');
+window.llamar = tel => window.location.href='tel:'+tel.replace(/\D/g,'');
+
+window.setEstado = async (id, estado) => {
+  setSyncState('loading');
+  await updateDoc(doc(db,'clientes',id),{estado, updatedAt:new Date().toISOString()});
+  actualizarResumen();
+};
+
+window.guardarNota = async id => {
+  const nota = document.getElementById('nota-'+id)?.value||'';
+  setSyncState('loading');
+  await updateDoc(doc(db,'clientes',id),{notaVisita:nota, updatedAt:new Date().toISOString()});
+  mostrarToast('📝 Nota guardada');
+};
 
 window.fijarContacto = async id => {
-  const c = clientesHoy.find(x=>x._id===id);
-  if (!c) return;
+  const c=clientesHoy.find(x=>x._id===id); if(!c) return;
   setSyncState('loading');
-  const {_id,_col,fechaDia,...datos} = c;
-  await addDoc(colContactos, {...datos, fijo:true, createdAt:new Date().toISOString()});
+  const {_id,_col,fechaDia,estado,notaVisita,orden,...datos}=c;
+  await addDoc(colContactos,{...datos,fijo:true,createdAt:new Date().toISOString()});
   mostrarToast('📌 Guardado como contacto fijo');
 };
 
+// DRAG & DROP
+function initDrag(){
+  const cards=[...document.querySelectorAll('.lista .cliente-card')];
+  cards.forEach(card=>{
+    card.addEventListener('dragstart',e=>{ dragSrcIdx=parseInt(card.dataset.idx); card.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; });
+    card.addEventListener('dragend',()=>{ card.classList.remove('dragging'); document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over')); });
+    card.addEventListener('dragover',e=>{ e.preventDefault(); card.classList.add('drag-over'); });
+    card.addEventListener('dragleave',()=>card.classList.remove('drag-over'));
+    card.addEventListener('drop',async e=>{
+      e.preventDefault(); card.classList.remove('drag-over');
+      const destIdx=parseInt(card.dataset.idx);
+      if(dragSrcIdx===destIdx) return;
+      const sorted=[...clientesHoy].sort((a,b)=>(a.orden??999)-(b.orden??999));
+      const [moved]=sorted.splice(dragSrcIdx,1);
+      sorted.splice(destIdx,0,moved);
+      setSyncState('loading');
+      const batch=writeBatch(db);
+      sorted.forEach((c,i)=>batch.update(doc(db,'clientes',c._id),{orden:i}));
+      await batch.commit();
+    });
+    // Touch drag
+    let touchY=0, touchCard=null;
+    card.addEventListener('touchstart',e=>{ touchY=e.touches[0].clientY; touchCard=card; dragSrcIdx=parseInt(card.dataset.idx); },{passive:true});
+    card.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      const touch=e.touches[0];
+      const el=document.elementFromPoint(touch.clientX,touch.clientY);
+      const target=el?.closest('.cliente-card');
+      document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));
+      if(target&&target!==card) target.classList.add('drag-over');
+    },{passive:false});
+    card.addEventListener('touchend',async e=>{
+      const touch=e.changedTouches[0];
+      const el=document.elementFromPoint(touch.clientX,touch.clientY);
+      const target=el?.closest('.cliente-card');
+      document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));
+      if(!target||target===card) return;
+      const destIdx=parseInt(target.dataset.idx);
+      if(dragSrcIdx===destIdx) return;
+      const sorted=[...clientesHoy].sort((a,b)=>(a.orden??999)-(b.orden??999));
+      const [moved]=sorted.splice(dragSrcIdx,1);
+      sorted.splice(destIdx,0,moved);
+      setSyncState('loading');
+      const batch=writeBatch(db);
+      sorted.forEach((c,i)=>batch.update(doc(db,'clientes',c._id),{orden:i}));
+      await batch.commit();
+    });
+  });
+}
+
+// HISTORIAL
 window.cargarHistorial = async () => {
-  const fecha = document.getElementById('hist-fecha').value;
-  if (!fecha) return;
-  const cont = document.getElementById('lista');
-  cont.innerHTML = `<div class="empty"><div class="empty-icon">🔄</div><div>Cargando...</div></div>`;
+  const fecha=document.getElementById('hist-fecha').value; if(!fecha) return;
+  const cont=document.getElementById('lista');
+  cont.innerHTML=`<div class="empty"><div class="empty-icon">🔄</div><div>Cargando...</div></div>`;
   try {
-    const snap = await getDoc(doc(colHistorial, fecha));
-    if (!snap.exists()||!snap.data().clientes?.length) {
-      cont.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div>Sin registros para el ${formatFecha(fecha)}</div></div>`;
-      return;
+    const snap=await getDoc(doc(colHistorial,fecha));
+    if(!snap.exists()||!snap.data().clientes?.length){
+      cont.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div>Sin registros para el ${formatFecha(fecha)}</div></div>`; return;
     }
-    const lista = snap.data().clientes;
-    cont.innerHTML = `<div style="padding:8px 0 4px;font-size:12px;color:var(--muted);text-align:center">📅 ${formatFecha(fecha)} — ${lista.length} clientes</div>`+
+    const lista=snap.data().clientes;
+    const totalCobrado=lista.filter(c=>c.estado==='cobrado').reduce((s,c)=>s+Number(c.precio||0),0);
+    cont.innerHTML=`<div style="padding:8px 0 4px;font-size:12px;color:var(--muted);text-align:center">📅 ${formatFecha(fecha)} — ${lista.length} clientes · Cobrado: $${totalCobrado.toLocaleString()}</div>`+
       lista.map((c,i)=>{
         const ini=c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-        const dirS=(c.direccion||'').replace(/'/g,"\\'");
-        return `<div class="cliente-card">
-          <div class="card-header" onclick="toggleDetalle('h${i}')">
-            <div class="avatar">${ini}</div>
-            <div class="card-info">
+        const dirFull=[(c.direccion||''),(c.localidad||'')].filter(Boolean).join(', ');
+        return `<div class="cliente-card${c.estado==='cobrado'?' cobrado':c.estado==='visitado'?' visitado':''}">
+          <div class="card-header">
+            <div class="avatar${c.estado==='cobrado'?' cobrado':c.estado==='visitado'?' visitado':''}" onclick="toggleDetalle('h${i}')">
+              ${ini}<span class="estado-badge">${estadoEmoji(c)}</span>
+            </div>
+            <div class="card-info" onclick="toggleDetalle('h${i}')">
               <div class="card-nombre">${c.nombre}</div>
-              <div class="card-dir">${c.direccion||''}${c.localidad?', '+c.localidad:''}</div>
+              <div class="card-dir">${dirFull}</div>
               <div class="card-badges">
                 ${c.hora?`<span class="badge badge-hora">${c.hora}</span>`:''}
                 ${c.tipo?`<span class="badge badge-tipo">${c.tipo}</span>`:''}
               </div>
             </div>
-            <button class="btn-mapa" onclick="event.stopPropagation();irMaps('${dirS}')">🗺 Ir</button>
+            <button class="btn-mapa" onclick="irMaps('${dirFull.replace(/'/g,"\\'")}')">🗺 Ir</button>
           </div>
           <div class="detalle" id="h${i}">
             <div class="detalle-grid">
               <div class="det-item"><div class="det-label">Plaga</div><div class="det-val">${c.plaga||'—'}</div></div>
               <div class="det-item"><div class="det-label">Franja</div><div class="det-val">${franjaLabel(c)}</div></div>
               <div class="det-item"><div class="det-label">Precio</div><div class="det-val verde">$${Number(c.precio||0).toLocaleString()}</div></div>
-              <div class="det-item"><div class="det-label">Deuda</div><div class="det-val ${c.deuda?'rojo':'verde'}">${c.deuda?'$'+Number(c.montoDeuda||0).toLocaleString():'Sin deuda'}</div></div>
+              <div class="det-item"><div class="det-label">Estado</div><div class="det-val">${c.estado==='cobrado'?'💰 Cobrado':c.estado==='visitado'?'✅ Visitado':'—'}</div></div>
             </div>
             ${c.obs?`<div class="observaciones"><div class="det-label">⚠ Obs</div><div class="det-val">${c.obs}</div></div>`:''}
+            ${c.notaVisita?`<div class="observaciones"><div class="det-label">📝 Nota</div><div class="det-val">${c.notaVisita}</div></div>`:''}
           </div>
         </div>`;
       }).join('');
-  } catch(e) {
-    cont.innerHTML=`<div class="empty"><div class="empty-icon">❌</div><div>Error al cargar</div></div>`;
-  }
+  } catch(e){ cont.innerHTML=`<div class="empty"><div class="empty-icon">❌</div><div>Error al cargar</div></div>`; }
 };
 
-// ── SCAN ─────────────────────────────────────────────
+// BUSCADOR CONTACTOS
+window.abrirBuscadorContactos = () => {
+  document.getElementById('buscar-contacto').value='';
+  filtrarContactos();
+  document.getElementById('overlay-contactos').classList.add('open');
+};
+window.filtrarContactos = () => {
+  const q=(document.getElementById('buscar-contacto')?.value||'').toLowerCase();
+  const lista=contactosFijos.filter(c=>!q||c.nombre.toLowerCase().includes(q)||(c.direccion||'').toLowerCase().includes(q));
+  const cont=document.getElementById('contacto-lista');
+  if(!cont) return;
+  if(!lista.length){ cont.innerHTML=`<div style="text-align:center;padding:20px;color:var(--muted)">Sin contactos${q?' encontrados':' guardados'}</div>`; return; }
+  cont.innerHTML=lista.map(c=>`
+    <div class="contacto-item">
+      <div class="contacto-item-info">
+        <div class="contacto-item-nombre">${c.nombre}</div>
+        <div class="contacto-item-dir">${c.direccion||''}${c.localidad?', '+c.localidad:''}</div>
+      </div>
+      <button class="contacto-item-add" onclick="prepararAgregarAlDia('${c._id}')">+</button>
+    </div>`).join('');
+};
+
+window.prepararAgregarAlDia = id => {
+  contactoParaAgregar = contactosFijos.find(x=>x._id===id);
+  if(!contactoParaAgregar) return;
+  document.getElementById('agregar-titulo').textContent = contactoParaAgregar.nombre;
+  document.getElementById('ag-hora').value = contactoParaAgregar.hora||'';
+  document.getElementById('ag-franja-desde').value = contactoParaAgregar.franjaDesde||'';
+  document.getElementById('ag-franja-hasta').value = contactoParaAgregar.franjaHasta||'';
+  document.getElementById('ag-obs-hoy').value = '';
+  document.getElementById('overlay-agregar').classList.add('open');
+};
+
+window.confirmarAgregarAlDia = async () => {
+  if(!contactoParaAgregar) return;
+  const hora=document.getElementById('ag-hora').value;
+  if(!hora){ alert('Ingresá la hora'); return; }
+  const {_id,_col,fijo,...datos}=contactoParaAgregar;
+  const obsHoy=document.getElementById('ag-obs-hoy').value;
+  const ahora=new Date().toISOString();
+  setSyncState('loading');
+  await addDoc(colClientes,{
+    ...datos,
+    hora,
+    franjaDesde:document.getElementById('ag-franja-desde').value,
+    franjaHasta:document.getElementById('ag-franja-hasta').value,
+    obs: obsHoy ? (datos.obs?datos.obs+' | '+obsHoy:obsHoy) : (datos.obs||''),
+    estado:'',notaVisita:'',
+    orden:clientesHoy.length,
+    fechaDia:hoyStr(),
+    fijo:false,
+    createdAt:ahora,updatedAt:ahora
+  });
+  cOv('overlay-agregar');
+  mostrarToast(`✅ ${contactoParaAgregar.nombre} agregado al día`);
+};
+
+// SCAN
+let scanModeActual='completa';
+window.setScanMode = mode => {
+  scanModeActual=mode;
+  ['btn-completa','btn-mitad-arr','btn-mitad-ab'].forEach(id=>document.getElementById(id)?.classList.remove('activo'));
+  const mapa={completa:'btn-completa',arriba:'btn-mitad-arr',abajo:'btn-mitad-ab'};
+  document.getElementById(mapa[mode])?.classList.add('activo');
+  const hints={completa:'Foto de la planilla completa',arriba:'Foto de la mitad superior',abajo:'Foto de la mitad inferior'};
+  document.getElementById('scan-text-hint').textContent=hints[mode];
+};
+
 window.abrirScan = () => {
-  imagenBase64=null; clientesEscaneados=[];
+  imagenBase64=null; clientesEscaneados=[]; clientesFallidos=[];
   document.getElementById('preview-img').style.display='none';
   document.getElementById('preview-img').src='';
   document.getElementById('scan-resultado').innerHTML='';
   document.getElementById('btn-procesar').disabled=true;
+  setScanMode('completa');
   document.getElementById('overlay-scan').classList.add('open');
 };
-window.cerrarScan = e => { if(e.target===document.getElementById('overlay-scan')) cerrarScanBtn(); };
-window.cerrarScanBtn = () => document.getElementById('overlay-scan').classList.remove('open');
 
 window.onImageSelected = e => {
   const file=e.target.files[0]; if(!file) return;
   const reader=new FileReader();
-  reader.onload = ev => {
+  reader.onload=ev=>{
     imagenBase64=ev.target.result.split(',')[1];
     const img=document.getElementById('preview-img');
     img.src=ev.target.result; img.style.display='block';
@@ -526,70 +810,71 @@ window.onImageSelected = e => {
   reader.readAsDataURL(file); e.target.value='';
 };
 
+const PROMPT_IA = (modo='') => `Sos un experto en leer planillas de fumigación de "La Palmeta" Argentina. Las planillas están impresas en máquina antigua con anotaciones manuscritas superpuestas.${modo?` ATENCIÓN: Esta es la mitad ${modo} de la planilla, puede estar cortada.`:''}
+
+ESTRUCTURA DE CADA FILA:
+HORA | APELLIDO NOMBRE | [anotaciones manuscritas] | DIRECCIÓN | ZONA(código interno) | TELÉFONO | LOCALIDAD | TARIFA | PAGO
+
+REGLAS CRÍTICAS — SEGUIR AL PIE DE LA LETRA:
+1. IGNORAR COMPLETAMENTE cualquier fila que tenga una línea horizontal que la atraviese (tachada = cancelada). No incluirla bajo ningún concepto.
+2. IGNORAR filas donde solo hay hora impresa sin nombre de cliente.
+3. IGNORAR la columna "Zona" (son códigos internos: R15, C07, B08, LP, KSR, RTL, etc. NO son dirección).
+4. Los nombres están APELLIDO NOMBRE (ej: "GARCIA CALVO SILVINA" → nombre completo tal cual).
+5. Si una fila es ilegible o muy dudosa, incluirla en el array "fallidos" con lo que se pudo leer.
+
+TIPO DE PROPIEDAD (anotación manuscrita junto al nombre):
+- "Ca/Jar","CaJar","C/JAR","C/JA" con resaltado VERDE = "Casa jardín"
+- "JAR" solo (sin Ca/) con resaltado verde = "Jardín"
+- "Ca/Per","CaPer","CA/PER","C/PER","C/PE","CA/PE" con resaltado ROSA u ORANGE = "Casa perímetro"
+- Sin anotación = "Casa perímetro" por defecto
+
+FRANJA HORARIA (números manuscritos junto al nombre, separados por guión, punto o barra):
+- "10-13" → franjaDesde:"10:00", franjaHasta:"13:00"
+- "11.15" o "11,15" → franjaDesde:"11:00", franjaHasta:"15:00"
+- "9.11" → franjaDesde:"09:00", franjaHasta:"11:00"
+- "14-16" → franjaDesde:"14:00", franjaHasta:"16:00"
+- Siempre en formato HH:MM
+
+TELÉFONO: extraer solo los números después del código de zona. Ignorar el código inicial (C07, R15, B05, KSR, etc.).
+
+PRECIO (columna TARIFA): número sin símbolo. Puntos como separador de miles: "135.000" = 135000, "70.000" = 70000.
+
+OBSERVACIONES: cualquier texto manuscrito adicional en amarillo/naranja/círculos/cuadros. Ej: "TACAZO","HORMIGAS","POLILLAS","falta conf.","por la mañana","osd","Aviso","Gelmar","1 año cucs","nuctar".
+
+Respondé ÚNICAMENTE con este JSON (sin texto ni markdown):
+{"clientes":[{"nombre":"","direccion":"","localidad":"","tel":"","hora":"","franjaDesde":"","franjaHasta":"","tipo":"","precio":0,"obs":""}],"fallidos":[{"linea":"texto de la línea dudosa","motivo":"por qué falló"}]}`;
+
 window.procesarPlanilla = async () => {
   if(!imagenBase64) return;
   const btnP=document.getElementById('btn-procesar');
   btnP.disabled=true;
   document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg"><div class="spin">🤖</div><div style="margin-top:10px">Leyendo la planilla...</div></div>`;
-
-  const prompt = `Sos un experto en leer planillas de fumigación de la empresa "La Palmeta" de Argentina. Estas planillas están impresas en una máquina antigua y tienen anotaciones manuscritas superpuestas.
-
-ESTRUCTURA DE LA PLANILLA:
-- Cada fila tiene: HORA | APELLIDO NOMBRE | [anotaciones manuscritas] | DIRECCIÓN | ZONA(código) | TELÉFONO | LOCALIDAD | TARIFA | PAGO
-
-REGLAS CRÍTICAS:
-1. IGNORAR COMPLETAMENTE filas con líneas horizontales que las atraviesan (tachadas = canceladas)
-2. IGNORAR filas vacías que solo tienen la hora impresa sin nombre
-3. IGNORAR la columna "Zona" (son códigos internos como R15, C07, B08, LP, etc., NO son parte de la dirección)
-4. Los nombres están en formato APELLIDO NOMBRE (ej: "GARCIA CALVO SILVINA" → nombre completo)
-
-TIPO DE PROPIEDAD (anotación manuscrita junto al nombre):
-- "Ca/Jar", "CaJar", "C/JAR", "C/JA" con resaltado VERDE = "Casa jardín"
-- "JAR" solo (sin "Ca") con resaltado VERDE = "Jardín"
-- "Ca/Per", "CaPer", "CA/PER", "C/PER", "C/PE" con resaltado ROSA/NARANJA = "Casa perímetro"
-- Sin anotación = "Casa perímetro" por defecto
-
-FRANJA HORARIA (números escritos a mano junto al nombre):
-- Formato "X-Y", "X.Y", "X/Y" son franjas: ej "10-13" → franjaDesde:"10:00", franjaHasta:"13:00"
-- "11.15" → franjaDesde:"11:00", franjaHasta:"15:00"
-- "9.11" → franjaDesde:"09:00", franjaHasta:"11:00"
-
-OBSERVACIONES (anotar cualquier texto manuscrito adicional en amarillo/naranja/círculos):
-- Ejemplos: "TACAZO", "HORMIGAS", "POLILLAS", "falta conf.", "por la mañana", "1 año", "osd", "Aviso", "Gelmar"
-- También anotar si hay texto como "S. hay con de@ntos" u otras notas importantes
-
-TELÉFONO: extraer solo los números del campo teléfono (ignorar el código de zona al inicio como C07, R15, B05, etc.)
-
-PRECIO: número de la columna TARIFA (puede tener puntos como separador de miles: "135.000" = 135000)
-
-Para cada cliente válido (no tachado, con nombre y dirección) extraé:
-- nombre, direccion, localidad, tel, hora (HH:MM), franjaDesde (HH:MM), franjaHasta (HH:MM), tipo, precio (número), obs
-
-Respondé ÚNICAMENTE con un array JSON válido, sin texto adicional ni markdown. Si no hay clientes válidos, respondé [].`;
-
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages",{
+    const modo=scanModeActual==='arriba'?'superior':scanModeActual==='abajo'?'inferior':'';
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
         model:"claude-sonnet-4-20250514",
-        max_tokens:3000,
+        max_tokens:4000,
         messages:[{role:"user",content:[
           {type:"image",source:{type:"base64",media_type:"image/jpeg",data:imagenBase64}},
-          {type:"text",text:prompt}
+          {type:"text",text:PROMPT_IA(modo)}
         ]}]
       })
     });
-    const data = await res.json();
-    const texto = data.content?.[0]?.text||'[]';
-    clientesEscaneados = JSON.parse(texto.replace(/```json|```/g,'').trim());
+    const data=await res.json();
+    const texto=data.content?.[0]?.text||'{}';
+    const parsed=JSON.parse(texto.replace(/```json|```/g,'').trim());
+    clientesEscaneados=parsed.clientes||[];
+    clientesFallidos=parsed.fallidos||[];
 
-    if(!clientesEscaneados.length){
-      document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg">No se encontraron clientes. Intentá con otra foto más nítida.</div>`;
+    if(!clientesEscaneados.length&&!clientesFallidos.length){
+      document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg">No se encontraron clientes. Probá con otra foto más nítida o usá las opciones de mitad.</div>`;
       btnP.disabled=false; return;
     }
 
-    let html=`<div style="margin-top:4px;font-size:12px;color:var(--muted);margin-bottom:8px">✅ <strong>${clientesEscaneados.length} clientes encontrados</strong>. Revisá antes de confirmar:</div><div class="preview-list">`;
+    let html=`<div style="margin-top:4px;font-size:12px;color:var(--muted);margin-bottom:8px">✅ <strong>${clientesEscaneados.length} clientes</strong> leídos${clientesFallidos.length?` · ⚠ <strong>${clientesFallidos.length} dudosos</strong>`:''}</div><div class="preview-list">`;
     clientesEscaneados.forEach(c=>{
       const franja=(c.franjaDesde&&c.franjaHasta)?`${c.franjaDesde}–${c.franjaHasta}`:'';
       html+=`<div class="preview-card">
@@ -599,6 +884,16 @@ Respondé ÚNICAMENTE con un array JSON válido, sin texto adicional ni markdown
         ${c.obs?`<div class="preview-obs">⚠ ${c.obs}</div>`:''}
       </div>`;
     });
+    if(clientesFallidos.length){
+      html+=`<div style="font-size:12px;font-weight:700;color:var(--rojo);margin:8px 0 4px">⚠ No se pudieron leer correctamente:</div>`;
+      clientesFallidos.forEach(f=>{
+        html+=`<div class="preview-card fallido">
+          <div class="preview-nombre">${f.linea||'Línea ilegible'}</div>
+          <div class="preview-detalle" style="color:var(--rojo)">${f.motivo||''}</div>
+        </div>`;
+      });
+      html+=`<button class="btn-reintentar" onclick="reintentarFallidos()">🔄 Reintentar solo los dudosos</button>`;
+    }
     html+=`</div><button class="btn-confirmar" onclick="confirmarCarga()">✅ Cargar ${clientesEscaneados.length} clientes</button>`;
     document.getElementById('scan-resultado').innerHTML=html;
     btnP.disabled=false;
@@ -608,26 +903,75 @@ Respondé ÚNICAMENTE con un array JSON válido, sin texto adicional ni markdown
   }
 };
 
+window.reintentarFallidos = async () => {
+  if(!clientesFallidos.length||!imagenBase64) return;
+  document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg"><div class="spin">🤖</div><div style="margin-top:10px">Reintentando las líneas dudosas...</div></div>`;
+  const lineas=clientesFallidos.map(f=>f.linea).join('\n');
+  try {
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",max_tokens:2000,
+        messages:[{role:"user",content:[
+          {type:"image",source:{type:"base64",media_type:"image/jpeg",data:imagenBase64}},
+          {type:"text",text:`Mirá de nuevo esta imagen de planilla de fumigación. Estas líneas no se pudieron leer bien antes:\n${lineas}\n\nIntentat leerlas nuevamente con más cuidado. Buscalas en la imagen y extraé los datos. Respondé SOLO con JSON: {"clientes":[{"nombre":"","direccion":"","localidad":"","tel":"","hora":"","franjaDesde":"","franjaHasta":"","tipo":"","precio":0,"obs":""}]}`}
+        ]}]
+      })
+    });
+    const data=await res.json();
+    const texto=data.content?.[0]?.text||'{}';
+    const parsed=JSON.parse(texto.replace(/```json|```/g,'').trim());
+    const nuevos=parsed.clientes||[];
+    clientesEscaneados=[...clientesEscaneados,...nuevos];
+    clientesFallidos=[];
+    let html=`<div style="font-size:12px;color:var(--muted);margin-bottom:8px">✅ Total: <strong>${clientesEscaneados.length} clientes</strong></div><div class="preview-list">`;
+    clientesEscaneados.forEach(c=>{
+      const franja=(c.franjaDesde&&c.franjaHasta)?`${c.franjaDesde}–${c.franjaHasta}`:'';
+      html+=`<div class="preview-card"><div class="preview-nombre">${c.nombre}</div><div class="preview-detalle">${c.hora?c.hora+' · ':''}${c.direccion||''}${c.localidad?', '+c.localidad:''}</div><div class="preview-detalle">${c.tipo||''}${franja?' · '+franja:''}${c.precio?' · $'+Number(c.precio).toLocaleString():''}</div>${c.obs?`<div class="preview-obs">⚠ ${c.obs}</div>`:''}</div>`;
+    });
+    html+=`</div><button class="btn-confirmar" onclick="confirmarCarga()">✅ Cargar ${clientesEscaneados.length} clientes</button>`;
+    document.getElementById('scan-resultado').innerHTML=html;
+  } catch(e){
+    document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg" style="color:var(--rojo)">Error al reintentar.</div>`;
+  }
+};
+
 window.confirmarCarga = async () => {
   setSyncState('loading');
   const ahora=new Date().toISOString();
-  for(const c of clientesEscaneados){
-    await addDoc(colClientes,{
-      nombre:c.nombre||'', direccion:c.direccion||'', localidad:c.localidad||'',
-      tel:c.tel||'', hora:c.hora||'',
-      franjaDesde:c.franjaDesde||'', franjaHasta:c.franjaHasta||'',
-      precio:parseFloat(c.precio)||0, tipo:c.tipo||'Casa perímetro',
-      depto:'', plaga:'Cucarachas', metodo:'Mochila eléctrica',
-      gelCuca:false, gelHorm:false, gas:false,
-      deuda:false, montoDeuda:0, obs:c.obs||'',
-      fijo:false, fechaDia:hoyStr(), createdAt:ahora, updatedAt:ahora
-    });
+  const ordenBase=clientesHoy.length;
+  for(let i=0;i<clientesEscaneados.length;i++){
+    const c=clientesEscaneados[i];
+    const datosCliente={
+      nombre:c.nombre||'',direccion:c.direccion||'',localidad:c.localidad||'',
+      tel:c.tel||'',hora:c.hora||'',
+      franjaDesde:c.franjaDesde||'',franjaHasta:c.franjaHasta||'',
+      precio:parseFloat(c.precio)||0,tipo:c.tipo||'Casa perímetro',
+      depto:'',plaga:'Cucarachas',metodo:'Mochila eléctrica',
+      gelCuca:false,gelHorm:false,gas:false,
+      deuda:false,montoDeuda:0,obs:c.obs||'',
+      estado:'',notaVisita:'',fijo:false,
+      orden:ordenBase+i,fechaDia:hoyStr(),createdAt:ahora,updatedAt:ahora
+    };
+    // Guardar en clientes del día
+    await addDoc(colClientes,datosCliente);
+    // Guardar también como contacto fijo (sin datos del día)
+    const {estado,notaVisita,orden,fechaDia,...datosContacto}=datosCliente;
+    // Solo guardar si no existe ya
+    const yaExiste=contactosFijos.some(cf=>cf.nombre.toLowerCase()===c.nombre.toLowerCase());
+    if(!yaExiste) await addDoc(colContactos,{...datosContacto,fijo:true,createdAt:ahora,updatedAt:ahora});
   }
-  cerrarScanBtn();
+  cOv('overlay-scan');
   mostrarToast(`✅ ${clientesEscaneados.length} clientes cargados`);
 };
 
-// ── FORM ─────────────────────────────────────────────
+// FORM MANUAL
+window.verificarDireccion = () => {
+  const dir=document.getElementById('f-direccion').value.trim();
+  if(!dir){ alert('Ingresá una dirección primero'); return; }
+  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(dir)}`,'_blank');
+};
+
 window.abrirForm = (cliente=null) => {
   editandoId=cliente?cliente._id:null;
   editandoCol=cliente?(cliente._col||'clientes'):'clientes';
@@ -641,27 +985,25 @@ window.abrirForm = (cliente=null) => {
     f('f-plaga',cliente.plaga);f('f-metodo',cliente.metodo);
     f('f-gel-cuca',cliente.gelCuca);f('f-gel-horm',cliente.gelHorm);f('f-gas',cliente.gas);
     f('f-deuda',cliente.deuda);f('f-monto-deuda',cliente.montoDeuda);f('f-obs',cliente.obs);
-    f('f-fijo',cliente.fijo||cliente._col==='contactos');
   } else {
     ['f-nombre','f-direccion','f-tel','f-hora','f-precio','f-depto','f-obs','f-monto-deuda','f-franja-desde','f-franja-hasta'].forEach(id=>f(id,''));
-    ['f-gel-cuca','f-gel-horm','f-gas','f-deuda','f-fijo'].forEach(id=>f(id,false));
+    ['f-gel-cuca','f-gel-horm','f-gas','f-deuda'].forEach(id=>f(id,false));
     f('f-tipo','Casa perímetro');f('f-plaga','Cucarachas');f('f-metodo','Mochila eléctrica');
   }
-  window.toggleDepto();window.toggleDeuda();
+  toggleDepto();toggleDeuda();
   document.getElementById('overlay').classList.add('open');
 };
+
 window.editarCliente=(id,col)=>{
   const lista=col==='contactos'?contactosFijos:clientesHoy;
-  const c=lista.find(x=>x._id===id);if(c)window.abrirForm(c);
+  const c=lista.find(x=>x._id===id); if(c) window.abrirForm(c);
 };
 window.eliminarCliente=async(id,col,nombre)=>{
-  if(!confirm(`¿Eliminar a ${nombre}?`))return;
+  if(!confirm(`¿Eliminar a ${nombre}?`)) return;
   setSyncState('loading');
   await deleteDoc(doc(db,col,id));
   mostrarToast('Cliente eliminado');
 };
-window.cerrarForm=e=>{if(e.target===document.getElementById('overlay'))window.cerrarFormBtn();};
-window.cerrarFormBtn=()=>document.getElementById('overlay').classList.remove('open');
 window.toggleDepto=()=>{ document.getElementById('grupo-depto').style.display=document.getElementById('f-tipo').value==='Departamento'?'block':'none'; };
 window.toggleDeuda=()=>{ document.getElementById('grupo-deuda').style.display=document.getElementById('f-deuda').checked?'block':'none'; };
 
@@ -669,7 +1011,6 @@ window.guardarCliente=async()=>{
   const nombre=document.getElementById('f-nombre').value.trim();
   const dir=document.getElementById('f-direccion').value.trim();
   if(!nombre||!dir){alert('Nombre y dirección son obligatorios');return;}
-  const esFijo=document.getElementById('f-fijo').checked;
   const datos={
     nombre,direccion:dir,
     tel:document.getElementById('f-tel').value,
@@ -687,7 +1028,7 @@ window.guardarCliente=async()=>{
     deuda:document.getElementById('f-deuda').checked,
     montoDeuda:parseFloat(document.getElementById('f-monto-deuda').value)||0,
     obs:document.getElementById('f-obs').value,
-    fijo:esFijo,updatedAt:new Date().toISOString()
+    updatedAt:new Date().toISOString()
   };
   setSyncState('loading');
   if(editandoId){
@@ -695,11 +1036,11 @@ window.guardarCliente=async()=>{
     mostrarToast('Cliente actualizado ✓');
   } else {
     datos.createdAt=new Date().toISOString();
-    if(!esFijo) datos.fechaDia=hoyStr();
-    await addDoc(esFijo?colContactos:colClientes,datos);
-    mostrarToast(esFijo?'📌 Contacto fijo guardado ✓':'Cliente del día guardado ✓');
+    if(editandoCol==='clientes'){ datos.fechaDia=hoyStr(); datos.estado=''; datos.orden=clientesHoy.length; }
+    await addDoc(editandoCol==='contactos'?colContactos:colClientes,datos);
+    mostrarToast('Guardado ✓');
   }
-  window.cerrarFormBtn();
+  cOv('overlay');
 };
 
 function mostrarToast(msg){
