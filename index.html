@@ -194,7 +194,6 @@
 <div class="tabs">
   <div class="tab active" onclick="cambiarTab('hoy',this)">Hoy</div>
   <div class="tab" onclick="cambiarTab('contactos',this)">Contactos</div>
-  <div class="tab" onclick="cambiarTab('deuda',this)">Deuda</div>
   <div class="tab" onclick="cambiarTab('historial',this)">Historial</div>
 </div>
 
@@ -218,6 +217,15 @@
   <div class="historial-selector">
     <label>📅 Ver día:</label>
     <input type="date" id="hist-fecha" onchange="cargarHistorial()">
+  </div>
+  <div style="padding:8px 16px;background:#fff;border-bottom:1px solid var(--border)">
+    <button class="btn-action primary" style="width:100%" onclick="importarHistorialAContactos()">📥 Importar este día a Contactos</button>
+  </div>
+</div>
+
+<div id="action-bar-contactos" style="display:none">
+  <div class="action-bar">
+    <button class="btn-action primary" onclick="importarTodoHistorial()">📥 Importar historial completo</button>
   </div>
 </div>
 
@@ -490,6 +498,7 @@ window.cambiarTab = (tab,el)=>{
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('action-bar-hoy').style.display=tab==='hoy'?'block':'none';
+  document.getElementById('action-bar-contactos').style.display=tab==='contactos'?'block':'none';
   document.getElementById('historial-bar').style.display=tab==='historial'?'block':'none';
   if(tab==='historial'){ document.getElementById('hist-fecha').value=hoyStr(); cargarHistorial(); }
   else renderizar();
@@ -508,7 +517,6 @@ function renderizar(q=''){
     });
     actualizarResumen();
   } else if(tabActual==='contactos') lista=contactosFijos;
-  else if(tabActual==='deuda') lista=[...clientesHoy,...contactosFijos].filter(c=>c.deuda);
   if(q) lista=lista.filter(c=>c.nombre.toLowerCase().includes(q)||(c.direccion||'').toLowerCase().includes(q));
   const cont=document.getElementById('lista');
   if(!lista.length){
@@ -593,6 +601,9 @@ function cardHTML(c,idx){
         ${c.tel?`<button class="btn-call" onclick="llamar('${c.tel}')">📞 Llamar</button>`:''}
         ${esHoy&&!esFijo?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
         <button class="btn-del" onclick="eliminarCliente('${c._id}','${col}','${nomS}')">🗑</button>
+      </div>
+      <!-- botón editar siempre visible en contactos -->
+      ${!esHoy?`<div style="margin-top:8px"><button style="width:100%;background:var(--verde);color:#fff;border:none;border-radius:20px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;" onclick="editarContacto('${c._id}')">✏ Editar contacto</button></div>`:''}
       </div>
     </div>
   </div>`;
@@ -815,12 +826,18 @@ const PROMPT_IA = (modo='') => `Sos un experto en leer planillas de fumigación 
 ESTRUCTURA DE CADA FILA:
 HORA | APELLIDO NOMBRE | [anotaciones manuscritas] | DIRECCIÓN | ZONA(código interno) | TELÉFONO | LOCALIDAD | TARIFA | PAGO
 
-REGLAS CRÍTICAS — SEGUIR AL PIE DE LA LETRA:
-1. IGNORAR COMPLETAMENTE cualquier fila que tenga una línea horizontal que la atraviese (tachada = cancelada). No incluirla bajo ningún concepto.
-2. IGNORAR filas donde solo hay hora impresa sin nombre de cliente.
-3. IGNORAR la columna "Zona" (son códigos internos: R15, C07, B08, LP, KSR, RTL, etc. NO son dirección).
-4. Los nombres están APELLIDO NOMBRE (ej: "GARCIA CALVO SILVINA" → nombre completo tal cual).
-5. Si una fila es ilegible o muy dudosa, incluirla en el array "fallidos" con lo que se pudo leer.
+PRIORIDAD DE LECTURA — MUY IMPORTANTE:
+Lo más importante es capturar correctamente: NOMBRE, DIRECCIÓN y TELÉFONO.
+Si una fila es parcialmente ilegible, igual incluila con lo que se pudo leer en esos tres campos.
+Los campos hora, franja, tipo, precio y obs son secundarios — si no se pueden leer, dejalos vacíos/0.
+NO mandes una fila a "fallidos" solo porque faltaron campos secundarios. Solo mandá a fallidos si nombre Y dirección son completamente ilegibles.
+
+REGLAS CRÍTICAS:
+1. IGNORAR COMPLETAMENTE filas con línea horizontal que las atraviese (tachadas = canceladas).
+2. IGNORAR filas con solo hora sin nombre de cliente.
+3. IGNORAR la columna "Zona" (códigos internos: R15, C07, B08, LP, KSR, RTL, etc. NO son dirección).
+4. Nombres en formato APELLIDO NOMBRE — copialos tal cual aparecen impresos.
+5. Solo mandar a "fallidos" si nombre Y dirección son completamente ilegibles.
 
 TIPO DE PROPIEDAD (anotación manuscrita junto al nombre):
 - "Ca/Jar","CaJar","C/JAR","C/JA" con resaltado VERDE = "Casa jardín"
@@ -828,18 +845,17 @@ TIPO DE PROPIEDAD (anotación manuscrita junto al nombre):
 - "Ca/Per","CaPer","CA/PER","C/PER","C/PE","CA/PE" con resaltado ROSA u ORANGE = "Casa perímetro"
 - Sin anotación = "Casa perímetro" por defecto
 
-FRANJA HORARIA (números manuscritos junto al nombre, separados por guión, punto o barra):
+FRANJA HORARIA (números manuscritos junto al nombre):
 - "10-13" → franjaDesde:"10:00", franjaHasta:"13:00"
-- "11.15" o "11,15" → franjaDesde:"11:00", franjaHasta:"15:00"
+- "11.15" → franjaDesde:"11:00", franjaHasta:"15:00"
 - "9.11" → franjaDesde:"09:00", franjaHasta:"11:00"
-- "14-16" → franjaDesde:"14:00", franjaHasta:"16:00"
-- Siempre en formato HH:MM
+- Siempre en formato HH:MM. Si no se ve, dejar vacío.
 
-TELÉFONO: extraer solo los números después del código de zona. Ignorar el código inicial (C07, R15, B05, KSR, etc.).
+TELÉFONO: solo los números después del código de zona (C07, R15, B05, KSR, etc.). Si no se lee bien, igual intentar capturar lo que se vea.
 
-PRECIO (columna TARIFA): número sin símbolo. Puntos como separador de miles: "135.000" = 135000, "70.000" = 70000.
+PRECIO (columna TARIFA): número sin símbolo. "135.000" = 135000. Si no se lee, poner 0.
 
-OBSERVACIONES: cualquier texto manuscrito adicional en amarillo/naranja/círculos/cuadros. Ej: "TACAZO","HORMIGAS","POLILLAS","falta conf.","por la mañana","osd","Aviso","Gelmar","1 año cucs","nuctar".
+OBSERVACIONES: texto manuscrito adicional en amarillo/naranja/círculos. Si no se ve, dejar vacío.
 
 Respondé ÚNICAMENTE con este JSON (sin texto ni markdown):
 {"clientes":[{"nombre":"","direccion":"","localidad":"","tel":"","hora":"","franjaDesde":"","franjaHasta":"","tipo":"","precio":0,"obs":""}],"fallidos":[{"linea":"texto de la línea dudosa","motivo":"por qué falló"}]}`;
@@ -998,6 +1014,10 @@ window.editarCliente=(id,col)=>{
   const lista=col==='contactos'?contactosFijos:clientesHoy;
   const c=lista.find(x=>x._id===id); if(c) window.abrirForm(c);
 };
+window.editarContacto=(id)=>{
+  const c=contactosFijos.find(x=>x._id===id);
+  if(c){ editandoId=c._id; editandoCol='contactos'; window.abrirForm(c); }
+};
 window.eliminarCliente=async(id,col,nombre)=>{
   if(!confirm(`¿Eliminar a ${nombre}?`)) return;
   setSyncState('loading');
@@ -1041,6 +1061,65 @@ window.guardarCliente=async()=>{
     mostrarToast('Guardado ✓');
   }
   cOv('overlay');
+};
+
+// Helper: guardar contacto si no existe (por nombre exacto, case-insensitive)
+async function guardarContactoSiNuevo(c, ahora) {
+  const nombreNorm = (c.nombre||'').trim().toLowerCase();
+  if (!nombreNorm) return;
+  const yaExiste = contactosFijos.some(cf => cf.nombre.trim().toLowerCase() === nombreNorm);
+  if (yaExiste) return;
+  const {estado,notaVisita,orden,fechaDia,...datos} = c;
+  await addDoc(colContactos, {...datos, fijo:true, createdAt:ahora, updatedAt:ahora});
+}
+
+// Importar el día seleccionado en historial a contactos
+window.importarHistorialAContactos = async () => {
+  const fecha = document.getElementById('hist-fecha').value;
+  if (!fecha) { mostrarToast('Seleccioná una fecha primero'); return; }
+  try {
+    const snap = await getDoc(doc(colHistorial, fecha));
+    if (!snap.exists()||!snap.data().clientes?.length) { mostrarToast('No hay clientes en ese día'); return; }
+    const lista = snap.data().clientes;
+    setSyncState('loading');
+    const ahora = new Date().toISOString();
+    let nuevos = 0;
+    for (const c of lista) {
+      const nombreNorm = (c.nombre||'').trim().toLowerCase();
+      if (!nombreNorm) continue;
+      const yaExiste = contactosFijos.some(cf => cf.nombre.trim().toLowerCase() === nombreNorm);
+      if (!yaExiste) { await addDoc(colContactos,{...c,fijo:true,createdAt:ahora,updatedAt:ahora}); nuevos++; }
+    }
+    mostrarToast(nuevos>0?`✅ ${nuevos} contactos importados`:`Sin contactos nuevos (todos ya existían)`);
+  } catch(e) { mostrarToast('Error al importar'); }
+};
+
+// Importar todo el historial de Firebase a contactos (una sola vez)
+window.importarTodoHistorial = async () => {
+  if (!confirm('¿Importar todos los días del historial a Contactos? Solo se agregarán nombres nuevos.')) return;
+  setSyncState('loading');
+  document.getElementById('action-bar-contactos').querySelector('button').disabled = true;
+  document.getElementById('action-bar-contactos').querySelector('button').textContent = '⏳ Importando...';
+  try {
+    const { getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    const snaps = await getDocs(colHistorial);
+    const ahora = new Date().toISOString();
+    let nuevos = 0;
+    for (const d of snaps.docs) {
+      const lista = d.data().clientes || [];
+      for (const c of lista) {
+        const nombreNorm = (c.nombre||'').trim().toLowerCase();
+        if (!nombreNorm) continue;
+        const yaExiste = contactosFijos.some(cf => cf.nombre.trim().toLowerCase() === nombreNorm);
+        if (!yaExiste) { await addDoc(colContactos,{...c,fijo:true,createdAt:ahora,updatedAt:ahora}); nuevos++; }
+      }
+    }
+    mostrarToast(`✅ ${nuevos} contactos nuevos importados del historial`);
+  } catch(e) { mostrarToast('Error al importar historial'); }
+  finally {
+    document.getElementById('action-bar-contactos').querySelector('button').disabled = false;
+    document.getElementById('action-bar-contactos').querySelector('button').textContent = '📥 Importar historial completo';
+  }
 };
 
 function mostrarToast(msg){
