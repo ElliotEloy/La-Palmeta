@@ -602,8 +602,6 @@ function cardHTML(c,idx){
         ${esHoy&&!esFijo?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
         <button class="btn-del" onclick="eliminarCliente('${c._id}','${col}','${nomS}')">🗑</button>
       </div>
-      <!-- botón editar siempre visible en contactos -->
-      ${!esHoy?`<div style="margin-top:8px"><button style="width:100%;background:var(--verde);color:#fff;border:none;border-radius:20px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;" onclick="editarContacto('${c._id}')">✏ Editar contacto</button></div>`:''}
       </div>
     </div>
   </div>`;
@@ -989,9 +987,13 @@ window.verificarDireccion = () => {
 };
 
 window.abrirForm = (cliente=null) => {
-  editandoId=cliente?cliente._id:null;
-  editandoCol=cliente?(cliente._col||'clientes'):'clientes';
-  document.getElementById('modal-titulo').textContent=cliente?'Editar cliente':'Nuevo cliente';
+  if(!cliente){
+    // Nuevo cliente desde el FAB
+    editandoId=null;
+    editandoCol=tabActual==='contactos'?'contactos':'clientes';
+  }
+  // Si cliente viene, editandoId y editandoCol ya fueron seteados por editarCliente/editarContacto
+  document.getElementById('modal-titulo').textContent=editandoId?(editandoCol==='contactos'?'Editar contacto':'Editar cliente del día'):'Nuevo cliente';
   const f=(id,val='')=>{const el=document.getElementById(id);if(el)el.type==='checkbox'?el.checked=!!val:el.value=val||'';};
   if(cliente){
     f('f-nombre',cliente.nombre);f('f-direccion',cliente.direccion);
@@ -1012,7 +1014,12 @@ window.abrirForm = (cliente=null) => {
 
 window.editarCliente=(id,col)=>{
   const lista=col==='contactos'?contactosFijos:clientesHoy;
-  const c=lista.find(x=>x._id===id); if(c) window.abrirForm(c);
+  const c=lista.find(x=>x._id===id);
+  if(c){
+    editandoId=c._id;
+    editandoCol=col;
+    window.abrirForm(c);
+  }
 };
 window.editarContacto=(id)=>{
   const c=contactosFijos.find(x=>x._id===id);
@@ -1053,12 +1060,18 @@ window.guardarCliente=async()=>{
   setSyncState('loading');
   if(editandoId){
     await updateDoc(doc(db,editandoCol,editandoId),datos);
-    mostrarToast('Cliente actualizado ✓');
+    mostrarToast(editandoCol==='contactos'?'Contacto actualizado ✓':'Cliente actualizado ✓');
   } else {
     datos.createdAt=new Date().toISOString();
-    if(editandoCol==='clientes'){ datos.fechaDia=hoyStr(); datos.estado=''; datos.orden=clientesHoy.length; }
-    await addDoc(editandoCol==='contactos'?colContactos:colClientes,datos);
-    mostrarToast('Guardado ✓');
+    if(editandoCol==='contactos'){
+      datos.fijo=true;
+      await addDoc(colContactos,datos);
+      mostrarToast('Contacto guardado ✓');
+    } else {
+      datos.fechaDia=hoyStr(); datos.estado=''; datos.orden=clientesHoy.length;
+      await addDoc(colClientes,datos);
+      mostrarToast('Cliente del día guardado ✓');
+    }
   }
   cOv('overlay');
 };
