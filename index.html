@@ -542,20 +542,20 @@ function estadoEmoji(c){
  
 function cardHTML(c,idx){
   const ini=c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  const esFijo=c.fijo||c._col==='contactos';
-  const col=c._col||'clientes';
+  const esContacto=tabActual==='contactos';
+  const esHoy=tabActual==='hoy';
+  const col=esContacto?'contactos':'clientes';
   const dirFull=[(c.direccion||''),(c.localidad||'')].filter(Boolean).join(', ');
   const dirS=dirFull.replace(/'/g,"\\'");
   const nomS=c.nombre.replace(/'/g,"\\'");
   const ec=estadoClase(c);
-  const esHoy=tabActual==='hoy';
   return `
-  <div class="cliente-card${esFijo&&!esHoy?' fijo':''}${ec?' '+ec:''}" 
+  <div class="cliente-card${esContacto?' fijo':''}${ec?' '+ec:''}"
        id="card-${c._id}" data-id="${c._id}" data-idx="${idx}"
        ${esHoy?'draggable="true"':''}>
     <div class="card-header">
       ${esHoy?`<span class="drag-handle">⠿</span>`:''}
-      <div class="avatar${esFijo&&!esHoy?' fijo':''}${ec?' '+ec:''}" onclick="toggleDetalle('det-${c._id}')">
+      <div class="avatar${esContacto?' fijo':''}${ec?' '+ec:''}" onclick="toggleDetalle('det-${c._id}')">
         ${ini}<span class="estado-badge">${estadoEmoji(c)}</span>
       </div>
       <div class="card-info" onclick="toggleDetalle('det-${c._id}')">
@@ -599,7 +599,7 @@ function cardHTML(c,idx){
         <button class="btn-edit" onclick="editarCliente('${c._id}','${col}')">✏ Editar</button>
         <button class="btn-nav" onclick="irMaps('${dirS}')">🗺 Ir</button>
         ${c.tel?`<button class="btn-call" onclick="llamar('${c.tel}')">📞 Llamar</button>`:''}
-        ${esHoy&&!esFijo?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
+        ${esHoy?`<button class="btn-fijar" onclick="fijarContacto('${c._id}')">📌 Fijar</button>`:''}
         <button class="btn-del" onclick="eliminarCliente('${c._id}','${col}','${nomS}')">🗑</button>
       </div>
     </div>
@@ -818,44 +818,34 @@ window.onImageSelected = e => {
   reader.readAsDataURL(file); e.target.value='';
 };
  
-const PROMPT_IA = (modo='') => `Sos un experto en leer planillas de fumigación de "La Palmeta" Argentina. Las planillas están impresas en máquina antigua con anotaciones manuscritas superpuestas.${modo?` ATENCIÓN: Esta es la mitad ${modo} de la planilla, puede estar cortada.`:''}
+const PROMPT_IA = (modo='') => `Sos un experto en leer planillas de fumigación de la empresa "La Palmeta" de Argentina. Las planillas tienen texto impreso por máquina antigua más anotaciones manuscritas encima.${modo?` Esta foto muestra la mitad ${modo} de la planilla.`:''}
  
-ESTRUCTURA DE CADA FILA:
-HORA | APELLIDO NOMBRE | [anotaciones manuscritas] | DIRECCIÓN | ZONA(código interno) | TELÉFONO | LOCALIDAD | TARIFA | PAGO
+PASO 1 — IDENTIFICAR FILAS VÁLIDAS:
+Una fila válida tiene NOMBRE DE CLIENTE impreso y una DIRECCIÓN. 
+- SALTEAR filas con una línea horizontal que las atraviese (canceladas/tachadas)
+- SALTEAR filas que solo tienen hora y están vacías
  
-PRIORIDAD DE LECTURA — MUY IMPORTANTE:
-Lo más importante es capturar correctamente: NOMBRE, DIRECCIÓN y TELÉFONO.
-Si una fila es parcialmente ilegible, igual incluila con lo que se pudo leer en esos tres campos.
-Los campos hora, franja, tipo, precio y obs son secundarios — si no se pueden leer, dejalos vacíos/0.
-NO mandes una fila a "fallidos" solo porque faltaron campos secundarios. Solo mandá a fallidos si nombre Y dirección son completamente ilegibles.
+PASO 2 — EXTRAER DATOS (en orden de prioridad):
+▶ NOMBRE: texto impreso en mayúsculas, formato APELLIDO NOMBRE. Copiarlo exactamente.
+▶ DIRECCIÓN: calle y número impresa. NO incluir el código de zona (R15, C07, B08, LP, KSR, C/J, etc.)
+▶ TELÉFONO: números después del código de zona. Ignorar el prefijo de letras.
+▶ LOCALIDAD: ciudad al final (Martínez, Olivos, Florida, La Lucila, Acassuso, Pilar, etc.)
+▶ HORA: número impreso al inicio de la fila, formato HH:MM
+▶ FRANJA: números manuscritos junto al nombre separados por guión/punto/barra → franjaDesde y franjaHasta en HH:MM
+  Ejemplos: "10-13"→10:00/13:00, "11.15"→11:00/15:00, "9/11"→09:00/11:00
+▶ TIPO DE PROPIEDAD (anotación manuscrita):
+  - Verde + "Ca/Jar","CaJar","C/JAR" = "Casa jardín"
+  - Verde + "JAR" solo = "Jardín"  
+  - Rosa/naranja + "Ca/Per","CA/PER","C/PE","CA/PE" = "Casa perímetro"
+  - Sin anotación = "Casa perímetro"
+▶ PRECIO: número en columna TARIFA. "135.000"=135000, "70.000"=70000. Sin símbolo $.
+▶ OBS: cualquier texto manuscrito extra en amarillo, naranja, círculos (TACAZO, HORMIGAS, POLILLAS, osd, Aviso, etc.)
  
-REGLAS CRÍTICAS:
-1. IGNORAR COMPLETAMENTE filas con línea horizontal que las atraviese (tachadas = canceladas).
-2. IGNORAR filas con solo hora sin nombre de cliente.
-3. IGNORAR la columna "Zona" (códigos internos: R15, C07, B08, LP, KSR, RTL, etc. NO son dirección).
-4. Nombres en formato APELLIDO NOMBRE — copialos tal cual aparecen impresos.
-5. Solo mandar a "fallidos" si nombre Y dirección son completamente ilegibles.
+REGLA CLAVE: Si una fila tiene nombre y dirección aunque sea parcialmente legible, INCLUIRLA con lo que se pudo leer. No mandar a fallidos por campos secundarios faltantes.
+Solo ir a "fallidos" si nombre O dirección son completamente ilegibles.
  
-TIPO DE PROPIEDAD (anotación manuscrita junto al nombre):
-- "Ca/Jar","CaJar","C/JAR","C/JA" con resaltado VERDE = "Casa jardín"
-- "JAR" solo (sin Ca/) con resaltado verde = "Jardín"
-- "Ca/Per","CaPer","CA/PER","C/PER","C/PE","CA/PE" con resaltado ROSA u ORANGE = "Casa perímetro"
-- Sin anotación = "Casa perímetro" por defecto
- 
-FRANJA HORARIA (números manuscritos junto al nombre):
-- "10-13" → franjaDesde:"10:00", franjaHasta:"13:00"
-- "11.15" → franjaDesde:"11:00", franjaHasta:"15:00"
-- "9.11" → franjaDesde:"09:00", franjaHasta:"11:00"
-- Siempre en formato HH:MM. Si no se ve, dejar vacío.
- 
-TELÉFONO: solo los números después del código de zona (C07, R15, B05, KSR, etc.). Si no se lee bien, igual intentar capturar lo que se vea.
- 
-PRECIO (columna TARIFA): número sin símbolo. "135.000" = 135000. Si no se lee, poner 0.
- 
-OBSERVACIONES: texto manuscrito adicional en amarillo/naranja/círculos. Si no se ve, dejar vacío.
- 
-Respondé ÚNICAMENTE con este JSON (sin texto ni markdown):
-{"clientes":[{"nombre":"","direccion":"","localidad":"","tel":"","hora":"","franjaDesde":"","franjaHasta":"","tipo":"","precio":0,"obs":""}],"fallidos":[{"linea":"texto de la línea dudosa","motivo":"por qué falló"}]}`;
+Respondé SOLO con JSON válido, sin texto ni markdown:
+{"clientes":[{"nombre":"","direccion":"","localidad":"","tel":"","hora":"","franjaDesde":"","franjaHasta":"","tipo":"Casa perímetro","precio":0,"obs":""}],"fallidos":[{"linea":"","motivo":""}]}`;
  
 window.procesarPlanilla = async () => {
   if(!imagenBase64) return;
@@ -1142,4 +1132,3 @@ function mostrarToast(msg){
 </script>
 </body>
 </html>
- 
