@@ -606,8 +606,8 @@ function cardHTML(c,idx){
   </div>`;
 }
 
-window.toggleDetalle = id => document.getElementById('det-'+id)?.classList.toggle('open');
-window.irMaps = dir => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`,'_blank');
+window.toggleDetalle = id => document.getElementById(id)?.classList.toggle('open');
+ window.irMaps = dir => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`,'_blank');
 window.llamar = tel => window.location.href='tel:'+tel.replace(/\D/g,'');
 
 window.setEstado = async (id, estado) => {
