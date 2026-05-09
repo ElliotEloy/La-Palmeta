@@ -18,7 +18,7 @@
     --text: #1a1a1a; --muted: #666; --radius: 12px;
   }
   body { font-family: -apple-system,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
- 
+
   .header { background:var(--verde-dark); color:#fff; padding:14px 16px; display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:100; }
   .header-logo { font-size:22px; }
   .header-titles { flex:1; }
@@ -29,20 +29,20 @@
   .sync-dot.loading { background:#facc15; animation:pulse 1s infinite; }
   .sync-dot.error { background:#f87171; }
   @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
- 
+
   .search-bar { padding:12px 16px; background:var(--verde-dark); }
   .search-bar input { width:100%; padding:10px 14px; border-radius:24px; border:none; font-size:15px; background:rgba(255,255,255,.15); color:#fff; outline:none; }
   .search-bar input::placeholder { color:rgba(255,255,255,.6); }
- 
+
   .tabs { display:flex; background:#fff; border-bottom:1px solid var(--border); }
   .tab { flex:1; padding:10px 4px; text-align:center; font-size:12px; cursor:pointer; color:var(--muted); border-bottom:2px solid transparent; transition:all .2s; }
   .tab.active { color:var(--verde); border-bottom-color:var(--verde); font-weight:600; }
- 
+
   .action-bar { padding:10px 16px; background:#fff; border-bottom:1px solid var(--border); display:flex; gap:8px; }
   .btn-action { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; border:none; border-radius:10px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; }
   .btn-action.primary { background:var(--verde-dark); color:#fff; }
   .btn-action.secondary { background:var(--verde-light); color:var(--verde-dark); }
- 
+
   /* RESUMEN DEL DÍA */
   .resumen-dia { margin:12px 16px 0; background:var(--card); border-radius:var(--radius); border:1px solid var(--border); padding:12px 14px; }
   .resumen-titulo { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
@@ -52,9 +52,9 @@
   .resumen-val.amber { color:var(--amber); }
   .resumen-val.rojo { color:var(--rojo); }
   .resumen-label { font-size:10px; color:var(--muted); margin-top:2px; }
- 
+
   .lista { padding:12px 16px; display:flex; flex-direction:column; gap:10px; padding-bottom:90px; }
- 
+
   /* CARDS */
   .cliente-card { background:var(--card); border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; transition:box-shadow .2s; }
   .cliente-card.fijo { border-left:3px solid var(--azul); }
@@ -62,7 +62,7 @@
   .cliente-card.cobrado { border-left:3px solid var(--amber); }
   .cliente-card.dragging { opacity:.4; }
   .cliente-card.drag-over { border-top:3px solid var(--verde); }
-  .card-header { padding:12px 14px; display:flex; align-items:center; gap:10px; }
+  .card-header { padding:12px 14px; display:flex; align-items:center; gap:10px; cursor:pointer; }
   .drag-handle { font-size:16px; color:var(--muted); cursor:grab; padding:2px 2px; touch-action:none; flex-shrink:0; user-select:none; }
   .avatar { width:40px; height:40px; border-radius:50%; background:var(--verde-light); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px; color:var(--verde-dark); flex-shrink:0; cursor:pointer; position:relative; }
   .avatar.fijo { background:var(--azul-light); color:var(--azul); }
@@ -78,17 +78,17 @@
   .badge-deuda { background:var(--rojo-light); color:var(--rojo); }
   .badge-tipo { background:var(--azul-light); color:var(--azul); }
   .btn-mapa { background:var(--verde); color:#fff; border:none; border-radius:20px; padding:7px 12px; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; flex-shrink:0; }
- 
+
   .detalle { display:none; padding:0 14px 14px; border-top:1px solid var(--border); }
   .detalle.open { display:block; }
- 
+
   /* BOTONES ESTADO */
   .estado-btns { display:flex; gap:6px; margin:12px 0 8px; }
   .btn-estado { flex:1; border:none; border-radius:10px; padding:10px 6px; font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px; }
   .btn-estado.pendiente { background:var(--bg); color:var(--muted); border:1px solid var(--border); }
   .btn-estado.visitado { background:#d1fae5; color:#065f46; }
   .btn-estado.cobrado-btn { background:var(--amber-light); color:var(--amber); }
- 
+
   .detalle-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
   .det-item { background:var(--bg); border-radius:8px; padding:8px 10px; }
   .det-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
@@ -98,24 +98,24 @@
   .observaciones { background:var(--amber-light); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
   .observaciones .det-label { color:var(--amber); }
   .observaciones .det-val { font-size:13px; font-weight:400; color:#412402; }
- 
+
   /* NOTA DE VISITA */
   .nota-visita { margin-bottom:10px; }
   .nota-visita textarea { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:13px; background:var(--bg); color:var(--text); outline:none; resize:none; font-family:inherit; }
   .nota-visita textarea:focus { border-color:var(--verde); }
   .btn-nota { background:var(--verde-light); color:var(--verde-dark); border:none; border-radius:8px; padding:6px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-top:4px; }
- 
+
   .detalle-actions { display:flex; gap:6px; flex-wrap:wrap; }
   .btn-edit { flex:1; background:transparent; border:1px solid var(--verde); color:var(--verde); border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
   .btn-nav { flex:1; background:var(--verde); color:#fff; border:none; border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
   .btn-call { flex:1; background:var(--azul-light); color:var(--azul); border:none; border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
   .btn-del { background:transparent; border:1px solid var(--rojo); color:var(--rojo); border-radius:20px; padding:8px 14px; font-size:12px; font-weight:600; cursor:pointer; }
   .btn-fijar { flex:1; background:transparent; border:1px solid var(--azul); color:var(--azul); border-radius:20px; padding:8px; font-size:12px; font-weight:600; cursor:pointer; }
- 
+
   .historial-selector { padding:12px 16px; background:#fff; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
   .historial-selector label { font-size:13px; color:var(--muted); white-space:nowrap; }
   .historial-selector input { flex:1; padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:var(--bg); outline:none; }
- 
+
   /* MODALES */
   .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; }
   .overlay.open { display:flex; align-items:flex-end; }
@@ -137,13 +137,13 @@
   .toggle input:checked + .toggle-slider { background:var(--verde); }
   .toggle input:checked + .toggle-slider:before { transform:translateX(20px); }
   .btn-guardar { width:100%; background:var(--verde); color:#fff; border:none; border-radius:24px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; margin-top:8px; }
- 
+
   .empty { text-align:center; padding:40px 20px; color:var(--muted); }
   .empty-icon { font-size:40px; margin-bottom:12px; }
   .fab { position:fixed; bottom:24px; right:20px; width:56px; height:56px; background:var(--verde); color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.25); z-index:150; display:flex; align-items:center; justify-content:center; }
   .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#1a1a1a; color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; z-index:400; opacity:0; transition:opacity .3s; pointer-events:none; white-space:nowrap; }
   .toast.show { opacity:1; }
- 
+
   /* SCAN */
   .scan-area { border:2px dashed var(--border); border-radius:12px; padding:24px; text-align:center; cursor:pointer; margin-bottom:14px; background:var(--bg); }
   .scan-area img { max-width:100%; border-radius:8px; margin-top:10px; max-height:200px; object-fit:contain; }
@@ -167,7 +167,7 @@
   .spin { display:inline-block; animation:spin 1s linear infinite; font-size:28px; }
   @keyframes spin { to { transform:rotate(360deg); } }
   .franja-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
- 
+
   /* BUSCADOR CONTACTOS */
   .contacto-search input { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:var(--bg); outline:none; margin-bottom:10px; }
   .contacto-lista { max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
@@ -179,7 +179,7 @@
 </style>
 </head>
 <body>
- 
+
 <div class="header">
   <span class="header-logo">🌿</span>
   <div class="header-titles">
@@ -196,7 +196,7 @@
   <div class="tab" onclick="cambiarTab('contactos',this)">Contactos</div>
   <div class="tab" onclick="cambiarTab('historial',this)">Historial</div>
 </div>
- 
+
 <div id="action-bar-hoy">
   <div class="action-bar">
     <button class="btn-action primary" onclick="abrirScan()">📷 Escanear</button>
@@ -212,7 +212,7 @@
     </div>
   </div>
 </div>
- 
+
 <div id="historial-bar" style="display:none">
   <div class="historial-selector">
     <label>📅 Ver día:</label>
@@ -222,20 +222,20 @@
     <button class="btn-action primary" style="width:100%" onclick="importarHistorialAContactos()">📥 Importar este día a Contactos</button>
   </div>
 </div>
- 
+
 <div id="action-bar-contactos" style="display:none">
   <div class="action-bar">
     <button class="btn-action primary" onclick="importarTodoHistorial()">📥 Importar historial completo</button>
   </div>
 </div>
- 
+
 <div class="lista" id="lista">
   <div class="empty"><div class="empty-icon">🔄</div><div>Conectando con la nube...</div></div>
 </div>
 <button class="fab" onclick="abrirForm()">+</button>
 <div class="toast" id="toast"></div>
 <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="onImageSelected(event)">
- 
+
 <!-- MODAL ESCANEO -->
 <div class="overlay" id="overlay-scan" onclick="cerrarOv('overlay-scan',event)">
   <div class="modal">
@@ -257,7 +257,7 @@
     <button class="btn-procesar" id="btn-procesar" onclick="procesarPlanilla()" disabled>🤖 Leer con IA</button>
   </div>
 </div>
- 
+
 <!-- MODAL BUSCADOR CONTACTOS -->
 <div class="overlay" id="overlay-contactos" onclick="cerrarOv('overlay-contactos',event)">
   <div class="modal">
@@ -272,7 +272,7 @@
     <div class="contacto-lista" id="contacto-lista"></div>
   </div>
 </div>
- 
+
 <!-- MODAL AGREGAR CONTACTO AL DÍA (con edición previa) -->
 <div class="overlay" id="overlay-agregar" onclick="cerrarOv('overlay-agregar',event)">
   <div class="modal">
@@ -299,7 +299,7 @@
     <button class="btn-guardar" onclick="confirmarAgregarAlDia()">Agregar al día</button>
   </div>
 </div>
- 
+
 <!-- MODAL CLIENTE (crear/editar) -->
 <div class="overlay" id="overlay" onclick="cerrarOv('overlay',event)">
   <div class="modal">
@@ -402,11 +402,11 @@
     <button class="btn-guardar" onclick="guardarCliente()">Guardar</button>
   </div>
 </div>
- 
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
- 
+
 const firebaseConfig = {
   apiKey: "AIzaSyBopAo2CTPxk7UPU_Adtty4r2W9WWtDMIA",
   authDomain: "la-palmeta.firebaseapp.com",
@@ -415,39 +415,39 @@ const firebaseConfig = {
   messagingSenderId: "286664558634",
   appId: "1:286664558634:web:19512e859865cf901d9b53"
 };
- 
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const colClientes  = collection(db,"clientes");
 const colContactos = collection(db,"contactos");
 const colHistorial = collection(db,"historial");
- 
+
 let clientesHoy=[], contactosFijos=[];
 let tabActual='hoy', editandoId=null, editandoCol='clientes';
 let imagenBase64=null, clientesEscaneados=[], clientesFallidos=[];
 let scanMode='completa';
 let contactoParaAgregar=null;
 let dragSrcIdx=null;
- 
+
 const syncDot = document.getElementById('sync-dot');
 const setSyncState = s => syncDot.className='sync-dot '+s;
 const hoyStr = () => new Date().toISOString().split('T')[0];
 const formatFecha = s => { const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
 document.getElementById('header-fecha').textContent = formatFecha(hoyStr());
- 
+
 onSnapshot(colClientes, snap => {
   clientesHoy = snap.docs.map(d=>({...d.data(),_id:d.id,_col:'clientes'}));
   setSyncState('ok');
   if(['hoy','deuda'].includes(tabActual)) renderizar();
 }, ()=>setSyncState('error'));
- 
+
 onSnapshot(colContactos, snap => {
   contactosFijos = snap.docs.map(d=>({...d.data(),_id:d.id,_col:'contactos',fijo:true}));
   setSyncState('ok');
   if(tabActual==='contactos') renderizar();
   filtrarContactos();
 }, ()=>setSyncState('error'));
- 
+
 // Archivado
 async function archivarDia(fecha, lista) {
   if(!lista.length) return;
@@ -474,7 +474,7 @@ function programarArchivado(){
 }
 setTimeout(chequearArchivado,3000);
 programarArchivado();
- 
+
 // Resumen del día
 function actualizarResumen() {
   const lista = clientesHoy;
@@ -488,11 +488,11 @@ function actualizarResumen() {
   document.getElementById('r-cobrados').textContent=cobrados;
   document.getElementById('r-monto').textContent='$'+monto.toLocaleString();
 }
- 
+
 window.cerrarOv = (id,e)=>{ if(e.target===document.getElementById(id)) cOv(id); };
 window.cOv = id => document.getElementById(id).classList.remove('open');
 window.filtrar = ()=>renderizar(document.getElementById('buscar').value.toLowerCase());
- 
+
 window.cambiarTab = (tab,el)=>{
   tabActual=tab;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -503,9 +503,9 @@ window.cambiarTab = (tab,el)=>{
   if(tab==='historial'){ document.getElementById('hist-fecha').value=hoyStr(); cargarHistorial(); }
   else renderizar();
 };
- 
+
 const franjaLabel = c=>(c.franjaDesde&&c.franjaHasta)?`${c.franjaDesde}–${c.franjaHasta}`:(c.franja||'—');
- 
+
 function renderizar(q=''){
   q=q||document.getElementById('buscar').value.toLowerCase();
   let lista=[];
@@ -528,7 +528,7 @@ function renderizar(q=''){
   cont.innerHTML=lista.map((c,i)=>cardHTML(c,i)).join('');
   if(tabActual==='hoy') initDrag();
 }
- 
+
 function estadoClase(c){
   if(c.estado==='cobrado') return 'cobrado';
   if(c.estado==='visitado') return 'visitado';
@@ -539,7 +539,7 @@ function estadoEmoji(c){
   if(c.estado==='visitado') return '✅';
   return '';
 }
- 
+
 function cardHTML(c,idx){
   const ini=c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
   const esContacto=tabActual==='contactos';
@@ -553,12 +553,12 @@ function cardHTML(c,idx){
   <div class="cliente-card${esContacto?' fijo':''}${ec?' '+ec:''}"
        id="card-${c._id}" data-id="${c._id}" data-idx="${idx}"
        ${esHoy?'draggable="true"':''}>
-    <div class="card-header">
-      ${esHoy?`<span class="drag-handle">⠿</span>`:''}
-      <div class="avatar${esContacto?' fijo':''}${ec?' '+ec:''}" onclick="toggleDetalle('det-${c._id}')">
+    <div class="card-header" onclick="toggleDetalle('det-${c._id}')">
+      ${esHoy?`<span class="drag-handle" onclick="event.stopPropagation()">⠿</span>`:''}
+      <div class="avatar${esContacto?' fijo':''}${ec?' '+ec:''}">
         ${ini}<span class="estado-badge">${estadoEmoji(c)}</span>
       </div>
-      <div class="card-info" onclick="toggleDetalle('det-${c._id}')">
+      <div class="card-info">
         <div class="card-nombre">${c.nombre}</div>
         <div class="card-dir">${dirFull}</div>
         <div class="card-badges">
@@ -567,7 +567,7 @@ function cardHTML(c,idx){
           ${c.deuda?`<span class="badge badge-deuda">Debe $${Number(c.montoDeuda||0).toLocaleString()}</span>`:''}
         </div>
       </div>
-      <button class="btn-mapa" onclick="irMaps('${dirS}')">🗺 Ir</button>
+      <button class="btn-mapa" onclick="event.stopPropagation();irMaps('${dirS}')">🗺 Ir</button>
     </div>
     <div class="detalle" id="det-${c._id}">
       ${esHoy?`
@@ -605,24 +605,24 @@ function cardHTML(c,idx){
     </div>
   </div>`;
 }
- 
+
 window.toggleDetalle = id => document.getElementById('det-'+id)?.classList.toggle('open');
 window.irMaps = dir => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dir)}&travelmode=driving`,'_blank');
 window.llamar = tel => window.location.href='tel:'+tel.replace(/\D/g,'');
- 
+
 window.setEstado = async (id, estado) => {
   setSyncState('loading');
   await updateDoc(doc(db,'clientes',id),{estado, updatedAt:new Date().toISOString()});
   actualizarResumen();
 };
- 
+
 window.guardarNota = async id => {
   const nota = document.getElementById('nota-'+id)?.value||'';
   setSyncState('loading');
   await updateDoc(doc(db,'clientes',id),{notaVisita:nota, updatedAt:new Date().toISOString()});
   mostrarToast('📝 Nota guardada');
 };
- 
+
 window.fijarContacto = async id => {
   const c=clientesHoy.find(x=>x._id===id); if(!c) return;
   setSyncState('loading');
@@ -630,7 +630,7 @@ window.fijarContacto = async id => {
   await addDoc(colContactos,{...datos,fijo:true,createdAt:new Date().toISOString()});
   mostrarToast('📌 Guardado como contacto fijo');
 };
- 
+
 // DRAG & DROP
 function initDrag(){
   const cards=[...document.querySelectorAll('.lista .cliente-card')];
@@ -680,7 +680,7 @@ function initDrag(){
     });
   });
 }
- 
+
 // HISTORIAL
 window.cargarHistorial = async () => {
   const fecha=document.getElementById('hist-fecha').value; if(!fecha) return;
@@ -726,7 +726,7 @@ window.cargarHistorial = async () => {
       }).join('');
   } catch(e){ cont.innerHTML=`<div class="empty"><div class="empty-icon">❌</div><div>Error al cargar</div></div>`; }
 };
- 
+
 // BUSCADOR CONTACTOS
 window.abrirBuscadorContactos = () => {
   document.getElementById('buscar-contacto').value='';
@@ -748,7 +748,7 @@ window.filtrarContactos = () => {
       <button class="contacto-item-add" onclick="prepararAgregarAlDia('${c._id}')">+</button>
     </div>`).join('');
 };
- 
+
 window.prepararAgregarAlDia = id => {
   contactoParaAgregar = contactosFijos.find(x=>x._id===id);
   if(!contactoParaAgregar) return;
@@ -759,7 +759,7 @@ window.prepararAgregarAlDia = id => {
   document.getElementById('ag-obs-hoy').value = '';
   document.getElementById('overlay-agregar').classList.add('open');
 };
- 
+
 window.confirmarAgregarAlDia = async () => {
   if(!contactoParaAgregar) return;
   const hora=document.getElementById('ag-hora').value;
@@ -783,7 +783,7 @@ window.confirmarAgregarAlDia = async () => {
   cOv('overlay-agregar');
   mostrarToast(`✅ ${contactoParaAgregar.nombre} agregado al día`);
 };
- 
+
 // SCAN
 let scanModeActual='completa';
 window.setScanMode = mode => {
@@ -794,7 +794,7 @@ window.setScanMode = mode => {
   const hints={completa:'Foto de la planilla completa',arriba:'Foto de la mitad superior',abajo:'Foto de la mitad inferior'};
   document.getElementById('scan-text-hint').textContent=hints[mode];
 };
- 
+
 window.abrirScan = () => {
   imagenBase64=null; clientesEscaneados=[]; clientesFallidos=[];
   document.getElementById('preview-img').style.display='none';
@@ -804,7 +804,7 @@ window.abrirScan = () => {
   setScanMode('completa');
   document.getElementById('overlay-scan').classList.add('open');
 };
- 
+
 window.onImageSelected = e => {
   const file=e.target.files[0]; if(!file) return;
   const reader=new FileReader();
@@ -817,14 +817,14 @@ window.onImageSelected = e => {
   };
   reader.readAsDataURL(file); e.target.value='';
 };
- 
+
 const PROMPT_IA = (modo='') => `Sos un experto en leer planillas de fumigación de la empresa "La Palmeta" de Argentina. Las planillas tienen texto impreso por máquina antigua más anotaciones manuscritas encima.${modo?` Esta foto muestra la mitad ${modo} de la planilla.`:''}
- 
+
 PASO 1 — IDENTIFICAR FILAS VÁLIDAS:
 Una fila válida tiene NOMBRE DE CLIENTE impreso y una DIRECCIÓN. 
 - SALTEAR filas con una línea horizontal que las atraviese (canceladas/tachadas)
 - SALTEAR filas que solo tienen hora y están vacías
- 
+
 PASO 2 — EXTRAER DATOS (en orden de prioridad):
 ▶ NOMBRE: texto impreso en mayúsculas, formato APELLIDO NOMBRE. Copiarlo exactamente.
 ▶ DIRECCIÓN: calle y número impresa. NO incluir el código de zona (R15, C07, B08, LP, KSR, C/J, etc.)
@@ -840,13 +840,13 @@ PASO 2 — EXTRAER DATOS (en orden de prioridad):
   - Sin anotación = "Casa perímetro"
 ▶ PRECIO: número en columna TARIFA. "135.000"=135000, "70.000"=70000. Sin símbolo $.
 ▶ OBS: cualquier texto manuscrito extra en amarillo, naranja, círculos (TACAZO, HORMIGAS, POLILLAS, osd, Aviso, etc.)
- 
+
 REGLA CLAVE: Si una fila tiene nombre y dirección aunque sea parcialmente legible, INCLUIRLA con lo que se pudo leer. No mandar a fallidos por campos secundarios faltantes.
 Solo ir a "fallidos" si nombre O dirección son completamente ilegibles.
- 
+
 Respondé SOLO con JSON válido, sin texto ni markdown:
 {"clientes":[{"nombre":"","direccion":"","localidad":"","tel":"","hora":"","franjaDesde":"","franjaHasta":"","tipo":"Casa perímetro","precio":0,"obs":""}],"fallidos":[{"linea":"","motivo":""}]}`;
- 
+
 window.procesarPlanilla = async () => {
   if(!imagenBase64) return;
   const btnP=document.getElementById('btn-procesar');
@@ -871,12 +871,12 @@ window.procesarPlanilla = async () => {
     const parsed=JSON.parse(texto.replace(/```json|```/g,'').trim());
     clientesEscaneados=parsed.clientes||[];
     clientesFallidos=parsed.fallidos||[];
- 
+
     if(!clientesEscaneados.length&&!clientesFallidos.length){
       document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg">No se encontraron clientes. Probá con otra foto más nítida o usá las opciones de mitad.</div>`;
       btnP.disabled=false; return;
     }
- 
+
     let html=`<div style="margin-top:4px;font-size:12px;color:var(--muted);margin-bottom:8px">✅ <strong>${clientesEscaneados.length} clientes</strong> leídos${clientesFallidos.length?` · ⚠ <strong>${clientesFallidos.length} dudosos</strong>`:''}</div><div class="preview-list">`;
     clientesEscaneados.forEach(c=>{
       const franja=(c.franjaDesde&&c.franjaHasta)?`${c.franjaDesde}–${c.franjaHasta}`:'';
@@ -905,7 +905,7 @@ window.procesarPlanilla = async () => {
     btnP.disabled=false;
   }
 };
- 
+
 window.reintentarFallidos = async () => {
   if(!clientesFallidos.length||!imagenBase64) return;
   document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg"><div class="spin">🤖</div><div style="margin-top:10px">Reintentando las líneas dudosas...</div></div>`;
@@ -938,7 +938,7 @@ window.reintentarFallidos = async () => {
     document.getElementById('scan-resultado').innerHTML=`<div class="scanning-msg" style="color:var(--rojo)">Error al reintentar.</div>`;
   }
 };
- 
+
 window.confirmarCarga = async () => {
   setSyncState('loading');
   const ahora=new Date().toISOString();
@@ -967,14 +967,14 @@ window.confirmarCarga = async () => {
   cOv('overlay-scan');
   mostrarToast(`✅ ${clientesEscaneados.length} clientes cargados`);
 };
- 
+
 // FORM MANUAL
 window.verificarDireccion = () => {
   const dir=document.getElementById('f-direccion').value.trim();
   if(!dir){ alert('Ingresá una dirección primero'); return; }
   window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(dir)}`,'_blank');
 };
- 
+
 window.abrirForm = (cliente=null) => {
   if(!cliente){
     // Nuevo cliente desde el FAB
@@ -1000,7 +1000,7 @@ window.abrirForm = (cliente=null) => {
   toggleDepto();toggleDeuda();
   document.getElementById('overlay').classList.add('open');
 };
- 
+
 window.editarCliente=(id,col)=>{
   const lista=col==='contactos'?contactosFijos:clientesHoy;
   const c=lista.find(x=>x._id===id);
@@ -1022,7 +1022,7 @@ window.eliminarCliente=async(id,col,nombre)=>{
 };
 window.toggleDepto=()=>{ document.getElementById('grupo-depto').style.display=document.getElementById('f-tipo').value==='Departamento'?'block':'none'; };
 window.toggleDeuda=()=>{ document.getElementById('grupo-deuda').style.display=document.getElementById('f-deuda').checked?'block':'none'; };
- 
+
 window.guardarCliente=async()=>{
   const nombre=document.getElementById('f-nombre').value.trim();
   const dir=document.getElementById('f-direccion').value.trim();
@@ -1064,7 +1064,7 @@ window.guardarCliente=async()=>{
   }
   cOv('overlay');
 };
- 
+
 // Helper: guardar contacto si no existe (por nombre exacto, case-insensitive)
 async function guardarContactoSiNuevo(c, ahora) {
   const nombreNorm = (c.nombre||'').trim().toLowerCase();
@@ -1074,7 +1074,7 @@ async function guardarContactoSiNuevo(c, ahora) {
   const {estado,notaVisita,orden,fechaDia,...datos} = c;
   await addDoc(colContactos, {...datos, fijo:true, createdAt:ahora, updatedAt:ahora});
 }
- 
+
 // Importar el día seleccionado en historial a contactos
 window.importarHistorialAContactos = async () => {
   const fecha = document.getElementById('hist-fecha').value;
@@ -1095,7 +1095,7 @@ window.importarHistorialAContactos = async () => {
     mostrarToast(nuevos>0?`✅ ${nuevos} contactos importados`:`Sin contactos nuevos (todos ya existían)`);
   } catch(e) { mostrarToast('Error al importar'); }
 };
- 
+
 // Importar todo el historial de Firebase a contactos (una sola vez)
 window.importarTodoHistorial = async () => {
   if (!confirm('¿Importar todos los días del historial a Contactos? Solo se agregarán nombres nuevos.')) return;
@@ -1123,7 +1123,7 @@ window.importarTodoHistorial = async () => {
     document.getElementById('action-bar-contactos').querySelector('button').textContent = '📥 Importar historial completo';
   }
 };
- 
+
 function mostrarToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
