@@ -212,6 +212,15 @@
       <div class="resumen-item"><div class="resumen-val verde" id="r-monto">$0</div><div class="resumen-label">Cobrado</div></div>
     </div>
   </div>
+  <!-- FUMIGADORES DEL DÍA -->
+  <div id="panel-fumigadores" class="resumen-dia" style="display:none;margin-top:0;border-top:1px solid var(--border);border-radius:0">
+    <div class="resumen-titulo">👷 Fumigadores de hoy</div>
+    <div id="fumigadores-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;min-height:28px"></div>
+    <div style="display:flex;gap:8px">
+      <input class="form-input" id="input-fumigador" type="text" placeholder="Nombre del fumigador..." style="flex:1;padding:8px 12px;font-size:13px" onkeydown="if(event.key==='Enter')agregarFumigador()">
+      <button onclick="agregarFumigador()" style="background:var(--verde);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:13px">+ Agregar</button>
+    </div>
+  </div>
 </div>
 
 <div id="historial-bar" style="display:none">
@@ -406,7 +415,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBopAo2CTPxk7UPU_Adtty4r2W9WWtDMIA",
@@ -471,8 +480,19 @@ onSnapshot(colContactos, snap => {
 async function archivarDia(fecha, lista) {
   if(!lista.length) return;
   setSyncState('loading');
+  // Traer fumigadores del día
+  let fumigadores = [];
+  try {
+    const diaSnap = await getDoc(doc(colDias, fecha));
+    fumigadores = diaSnap.exists() ? (diaSnap.data().fumigadores || []) : [];
+  } catch(e) {}
   const batch=writeBatch(db);
-  batch.set(doc(colHistorial,fecha),{fecha,archivedAt:new Date().toISOString(),clientes:lista.map(({_id,_col,...r})=>r)});
+  batch.set(doc(colHistorial,fecha),{
+    fecha,
+    archivedAt:new Date().toISOString(),
+    clientes:lista.map(({_id,_col,...r})=>r),
+    fumigadores
+  });
   lista.forEach(c=>batch.delete(doc(db,'clientes',c._id)));
   await batch.commit();
   mostrarToast(`📦 Día ${formatFecha(fecha)} archivado`);
@@ -497,8 +517,13 @@ programarArchivado();
 // Resumen del día
 function actualizarResumen() {
   const lista = clientesHoy;
-  if(!lista.length){ document.getElementById('resumen-dia').style.display='none'; return; }
+  if(!lista.length){ 
+    document.getElementById('resumen-dia').style.display='none';
+    document.getElementById('panel-fumigadores').style.display='none';
+    return; 
+  }
   document.getElementById('resumen-dia').style.display='block';
+  document.getElementById('panel-fumigadores').style.display='block';
   const visitados = lista.filter(c=>c.estado==='visitado'||c.estado==='cobrado').length;
   const cobrados = lista.filter(c=>c.estado==='cobrado').length;
   const monto = lista.filter(c=>c.estado==='cobrado').reduce((s,c)=>s+Number(c.precio||0),0);
@@ -506,6 +531,7 @@ function actualizarResumen() {
   document.getElementById('r-visitados').textContent=visitados;
   document.getElementById('r-cobrados').textContent=cobrados;
   document.getElementById('r-monto').textContent='$'+monto.toLocaleString();
+  cargarFumigadores();
 }
 
 window.cerrarOv = (id,e)=>{ if(e.target===document.getElementById(id)) cOv(id); };
@@ -712,8 +738,12 @@ window.cargarHistorial = async () => {
       cont.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div>Sin registros para el ${formatFecha(fecha)}</div></div>`; return;
     }
     const lista=snap.data().clientes;
+    const fumigadores=snap.data().fumigadores||[];
     const totalCobrado=lista.filter(c=>c.estado==='cobrado').reduce((s,c)=>s+Number(c.precio||0),0);
-    cont.innerHTML=`<div style="padding:8px 0 4px;font-size:12px;color:var(--muted);text-align:center">📅 ${formatFecha(fecha)} — ${lista.length} clientes · Cobrado: $${totalCobrado.toLocaleString()}</div>`+
+    const fumigadoresHTML = fumigadores.length 
+      ? `<div style="padding:6px 16px 4px;font-size:12px;color:var(--verde-dark)">👷 <strong>Fumigadores:</strong> ${fumigadores.join(', ')}</div>`
+      : '';
+    cont.innerHTML=`<div style="padding:8px 16px 0;font-size:12px;color:var(--muted);text-align:center">📅 ${formatFecha(fecha)} — ${lista.length} clientes · Cobrado: $${totalCobrado.toLocaleString()}</div>${fumigadoresHTML}`+
       lista.map((c,i)=>{
         const ini=c.nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
         const dirFull=[(c.direccion||''),(c.localidad||'')].filter(Boolean).join(', ');
@@ -1255,6 +1285,56 @@ window.importarTodoHistorial = async () => {
     document.getElementById('action-bar-contactos').querySelector('button').disabled = false;
     document.getElementById('action-bar-contactos').querySelector('button').textContent = '📥 Importar historial completo';
   }
+};
+
+// ── FUMIGADORES ───────────────────────────────────────
+const colDias = collection(db, "dias");
+
+async function cargarFumigadores() {
+  try {
+    const snap = await getDoc(doc(colDias, hoyStr()));
+    const fumigadores = snap.exists() ? (snap.data().fumigadores || []) : [];
+    renderFumigadoresChips(fumigadores);
+  } catch(e) { renderFumigadoresChips([]); }
+}
+
+function renderFumigadoresChips(lista) {
+  const cont = document.getElementById('fumigadores-chips');
+  if (!cont) return;
+  if (!lista.length) { cont.innerHTML = `<span style="font-size:12px;color:var(--muted)">Sin fumigadores cargados</span>`; return; }
+  cont.innerHTML = lista.map(f => `
+    <span style="display:inline-flex;align-items:center;gap:5px;background:var(--verde-light);color:var(--verde-dark);border-radius:20px;padding:4px 10px;font-size:13px;font-weight:600">
+      👷 ${f}
+      <button onclick="quitarFumigador('${f}')" style="background:none;border:none;cursor:pointer;color:var(--verde-dark);font-size:14px;line-height:1;padding:0">✕</button>
+    </span>`).join('');
+}
+
+window.agregarFumigador = async () => {
+  const input = document.getElementById('input-fumigador');
+  const nombre = input.value.trim();
+  if (!nombre) return;
+  try {
+    const ref = doc(colDias, hoyStr());
+    const snap = await getDoc(ref);
+    const lista = snap.exists() ? (snap.data().fumigadores || []) : [];
+    if (lista.includes(nombre)) { mostrarToast('Ya está en la lista'); input.value=''; return; }
+    lista.push(nombre);
+    await setDoc(ref, { fumigadores: lista, fecha: hoyStr() }, { merge: true });
+    renderFumigadoresChips(lista);
+    input.value = '';
+    mostrarToast(`👷 ${nombre} agregado`);
+  } catch(e) { mostrarToast('Error al guardar'); }
+};
+
+window.quitarFumigador = async (nombre) => {
+  try {
+    const ref = doc(colDias, hoyStr());
+    const snap = await getDoc(ref);
+    const lista = (snap.data()?.fumigadores || []).filter(f => f !== nombre);
+    await setDoc(ref, { fumigadores: lista, fecha: hoyStr() }, { merge: true });
+    renderFumigadoresChips(lista);
+    mostrarToast(`${nombre} quitado`);
+  } catch(e) { mostrarToast('Error al quitar'); }
 };
 
 function mostrarToast(msg){
